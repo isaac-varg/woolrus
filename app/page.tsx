@@ -1,14 +1,18 @@
 import { woo } from "@/lib/woocommerce";
-import { GET_PRODUCTS } from "@/queries/products";
+import { GET_PROCESSING_ORDERS } from "@/queries/orders";
+import { GET_PRODUCT_WITH_VARIATIONS } from "@/queries/products";
+
 
 export default async function Home() {
-  const data = await woo.request(GET_PRODUCTS);
+  const another = await woo.request(GET_PROCESSING_ORDERS)
 
   return (
     <div>
 
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-      hey
+
+
+      <pre>{JSON.stringify(another, null, 2)}</pre>
     </div>
+
   );
 }

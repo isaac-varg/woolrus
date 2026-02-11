@@ -1,0 +1,19 @@
+model Order {
+  id              Int         @id @default(autoincrement())
+  wooId           Int         @unique
+  orderNumber     String
+  wooStatus       String      @default("processing")  // Status in WooCommerce
+  customerName    String
+  customerEmail   String?
+  shippingAddress Json
+  billingAddress  Json?
+  orderNotes      String?
+  paymentMethod   String?
+  orderTotal      Float
+  wooCreatedAt    DateTime
+  syncedAt        DateTime    @default(now())  // When we pulled it
+  updatedAt       DateTime    @updatedAt
+
+  items           OrderItem[]
+  workflow        OrderWorkflow?
+}

@@ -1,0 +1,18 @@
+model ProductVariation {
+  id            Int      @id @default(autoincrement())
+  wooId         Int      @unique
+  productId     Int
+  name          String // e.g. "T-Shirt - Large / Red"
+  sku           String?
+  imageUrl      String?
+  price         Float?
+  weight        Float?
+  stockQuantity Int?
+  attributes    Json // e.g. [{ name: "Size", value: "Large" }]
+  binLocation   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  product    Product     @relation(fields: [productId], references: [id])
+  orderItems OrderItem[]
+}

@@ -1,0 +1,6 @@
+enum PickStatus {
+  PENDING
+  PICKED
+  OUT_OF_STOCK
+  SUBSTITUTED
+}

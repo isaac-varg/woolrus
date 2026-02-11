@@ -1,0 +1,9 @@
+enum WorkflowStatus {
+  PENDING
+  PICKING
+  PACKING
+  QA
+  COMPLETED
+  ON_HOLD
+  CANCELLED
+}

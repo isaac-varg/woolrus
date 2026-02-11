@@ -1,0 +1,9 @@
+model SyncLog {
+  id          Int       @id @default(autoincrement())
+  syncType    String                    // "orders", "products"
+  status      String                    // "success", "error"
+  recordsProcessed Int @default(0)
+  error       String?
+  startedAt   DateTime
+  completedAt DateTime?
+}

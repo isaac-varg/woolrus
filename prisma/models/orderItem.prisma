@@ -1,0 +1,23 @@
+model OrderItem {
+  id             Int     @id @default(autoincrement())
+  orderId        Int
+  productId      Int?
+  variationId    Int? // Set if this is a variable product
+  wooProductId   Int
+  wooVariationId Int?
+  name           String
+  sku            String?
+  quantity       Int
+  price          Float
+  imageUrl       String?
+  attributes     Json? // Variation attributes for display
+
+  order     Order             @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product?          @relation(fields: [productId], references: [id])
+  variation ProductVariation? @relation(fields: [variationId], references: [id])
+
+  pickStatus PickStatus @default(PENDING)
+  pickedAt   DateTime?
+  pickedById String?
+  pickedBy   User?      @relation(fields: [pickedById], references: [id])
+}

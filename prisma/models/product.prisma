@@ -1,0 +1,17 @@
+model Product {
+  id            Int      @id @default(autoincrement())
+  wooId         Int      @unique
+  name          String
+  sku           String?
+  imageUrl      String?
+  weight        Float?
+  price         Float?
+  stockQuantity Int?
+  productType   String   @default("simple") // "simple" or "variable"
+  binLocation   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  variations ProductVariation[]
+  orderItems OrderItem[]
+}

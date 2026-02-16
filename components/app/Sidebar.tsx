@@ -4,6 +4,8 @@ import Image from "next/image";
 import { Fragment, useEffect } from "react";
 import { useApp, useAppActions } from "@/store/appSlice";
 import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarLeftExpand, TbLayoutSidebarRightCollapse } from "react-icons/tb";
+import { links } from "@/lib/sidebar/links";
+import SidebarButton from "./SidebarButton";
 
 export default function Sidebar({
   initialCollapsed,
@@ -19,27 +21,44 @@ export default function Sidebar({
 
   return (
     <aside
-      className={`h-screen flex flex-col justify-between bg-base-100 border-r border-base-300 transition-all duration-300 ${isSidebarCollapsed ? "w-16" : "w-64"
+      className={`h-screen flex flex-col px-4 justify-between bg-base-100 border-r border-base-300 transition-all duration-300 ${isSidebarCollapsed ? "w-16" : "w-64"
         }`}
     >
       {/* Top: Logo + Branding */}
-      <div className="flex items-center gap-3 px-4 py-4">
-        <Image
-          src="/logos/woolrus.png"
-          alt="Woolrus"
-          width={32}
-          height={32}
-          className="shrink-0"
-        />
-        {!isSidebarCollapsed && (
-          <span className="text-lg font-semibold whitespace-nowrap">
-            Woolrus
-          </span>
-        )}
+      <div className="flex flex-col gap-6">
+        <div className="flex items-center gap-3 py-4">
+          <Image
+            src="/logos/woolrus.png"
+            alt="Woolrus"
+            width={32}
+            height={32}
+            className="shrink-0"
+          />
+          {!isSidebarCollapsed && (
+            <span className="text-lg font-semibold whitespace-nowrap">
+              Woolrus
+            </span>
+          )}
+        </div>
+
+        <div
+          className="flex flex-col gap-2"
+        >
+          {links.map(link => <SidebarButton
+            key={link.title}
+            title={link.title}
+            path={link.path}
+            icon={link.icon}
+          />
+          )}
+        </div>
+
       </div>
 
-      {/* Bottom: Sync info + Toggle */}
-      <div className="flex flex-col gap-2 px-4 py-4">
+
+
+      {/* Botton Stuff - Sync + collapse */}
+      <div className="flex flex-col gap-2 py-4">
         {!isSidebarCollapsed && (
           <span className="text-xs text-base-content/50">
             Last Sync: 2 minutes ago

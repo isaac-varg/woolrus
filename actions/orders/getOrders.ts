@@ -1,11 +1,16 @@
 'use server'
 
 import prisma from "@/lib/prisma"
+import { PickStatus } from "@/prisma/generated/enums"
 
-export const getOrders = async (status?: string) => {
+export const getOrders = async (status?: PickStatus) => {
 
   if (status) {
-    return prisma.order.findMany({ where: { status } })
+    return await prisma.order.findMany({
+      where: {
+        pickStatus: status
+      }
+    })
   }
-  return prisma.order.findMany({ where: { status: { not: 'complete' } } })
+  return await prisma.order.findMany();
 }

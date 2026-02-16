@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { pullProcessingOrders } from "@/actions/pullOrders";
+import { pullProcessingOrders } from "@/actions/sync/pullOrders";
 
 async function main() {
   console.log('Starting order sync...');

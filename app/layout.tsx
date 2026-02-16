@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { auth } from "@/auth";
 import LoginScreen from "@/components/app/LoginScreen";
+import Sidebar from "@/components/app/Sidebar";
 import { getUserByEmail } from "@/actions/user/getUserByEmail";
 import { getUserPreferences } from "@/lib/preferences/getUserPreferences";
 
@@ -38,7 +39,14 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-base-200`}
       >
-        {isAuthenticated ? children : <LoginScreen />}
+        {isAuthenticated ? (
+          <div className="flex h-screen">
+            <Sidebar initialCollapsed={preferences.sidebarCollapsed} />
+            <main className="flex-1 overflow-auto">{children}</main>
+          </div>
+        ) : (
+          <LoginScreen />
+        )}
       </body>
     </html>
   );

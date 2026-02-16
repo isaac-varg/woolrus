@@ -1,6 +1,42 @@
-const Pending = () => {
+import { getOrders } from "@/actions/orders/getOrders"
+import Table from "./Table"
+import { LuSearch } from "react-icons/lu"
+
+const Pending = async () => {
+  const orders = await getOrders("PENDING")
+
+  if (orders.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-16 text-base-content/50">
+        No pending orders
+      </div>
+    )
+  }
+
   return (
-    <div>This is niiiice</div>
+    <div className="flex flex-col gap-6 py-8 px-12">
+
+      <div className="flex flex-col gap-y-6">
+        <div className="text-4xl text-base-content font-semibold">Pending</div>
+
+        <div className="flex-1 relative">
+          <LuSearch className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
+          <input
+            type="text"
+            placeholder="Search by order number or customer or..."
+            className="w-full pl-12 pr-4 py-3 border border-zinc-300 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        {/*  <div className="border-b border-primary" />*/}
+      </div>
+
+
+
+
+
+      <Table orders={orders} />
+    </div>
   )
 }
 

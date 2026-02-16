@@ -21,28 +21,28 @@ export default function Sidebar({
 
   return (
     <aside
-      className={`h-screen flex flex-col px-4 justify-between bg-base-100 border-r border-base-300 transition-all duration-300 ${isSidebarCollapsed ? "w-16" : "w-64"
+      className={`h-screen flex flex-col px-4 py-8 bg-base-100  justify-between  border-r border-base-300 transition-all duration-300 ${isSidebarCollapsed ? "w-16" : "w-64"
         }`}
     >
       {/* Top: Logo + Branding */}
-      <div className="flex flex-col gap-6">
-        <div className="flex items-center gap-3 py-4">
+      <div className="flex flex-col gap-6 ">
+        <div className="flex items-center gap-3  ">
           <Image
             src="/logos/woolrus.png"
             alt="Woolrus"
-            width={32}
-            height={32}
+            width={64}
+            height={64}
             className="shrink-0"
           />
           {!isSidebarCollapsed && (
-            <span className="text-lg font-semibold whitespace-nowrap">
+            <span className="text-3xl text-primary-content font-semibold whitespace-nowrap">
               Woolrus
             </span>
           )}
         </div>
 
         <div
-          className="flex flex-col gap-2"
+          className="flex flex-col gap-6"
         >
           {links.map(link => <SidebarButton
             key={link.title}

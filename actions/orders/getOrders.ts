@@ -5,12 +5,17 @@ import { PickStatus } from "@/prisma/generated/enums"
 
 export const getOrders = async (status?: PickStatus) => {
 
-  if (status) {
-    return await prisma.order.findMany({
-      where: {
-        pickStatus: status
-      }
-    })
+  const options = {
+    include: {
+      items: true,
+    },
+    orderBy: {
+      wooCreatedAt: 'asc' as const,
+    },
+    ...(status && { where: { pickStatus: status } }),
   }
-  return await prisma.order.findMany();
+
+  return await prisma.order.findMany(options);
 }
+
+export type OrderWithItems = Awaited<ReturnType<typeof getOrders>>[number]

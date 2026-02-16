@@ -15,7 +15,7 @@ const SidebarButton = ({ path, title, icon }: SidebarButton) => {
   return (
     <button
       onClick={() => router.push(path)}
-      className="btn btn-primary w-full">
+      className="btn btn-lg btn-primary w-full">
       {title}
     </button>
 

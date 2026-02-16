@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { auth } from "@/auth";
+import LoginScreen from "@/components/app/LoginScreen";
+import { getUserByEmail } from "@/actions/user/getUserByEmail";
+import { getUserPreferences } from "@/lib/preferences/getUserPreferences";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,19 +28,17 @@ export default async function RootLayout({
 }>) {
 
 
-  const session = await auth()
-  if (!session?.user) return null;
-
-
-
-
+  const session = await auth();
+  const isAuthenticated = !!session?.user;
+  const user = await getUserByEmail(session?.user?.email || '')
+  const preferences = getUserPreferences(user);
 
   return (
-    <html lang="en" data-theme="dark" >
+    <html lang="en" data-theme={preferences.theme} >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-base-200`}
       >
-        {children}
+        {isAuthenticated ? children : <LoginScreen />}
       </body>
     </html>
   );

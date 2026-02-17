@@ -1,6 +1,6 @@
 model OrderWorkflow {
-  id      Int            @id @default(autoincrement())
-  orderId Int            @unique
+  id              String         @id @default(uuid())
+  orderId String            @unique
   status  WorkflowStatus @default(PENDING)
 
   // Assignment & tracking

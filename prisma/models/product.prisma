@@ -1,5 +1,5 @@
 model Product {
-  id            Int      @id @default(autoincrement())
+  id             String            @id @default(uuid())
   wooId         Int      @unique
   name          String
   sku           String?

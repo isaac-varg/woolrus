@@ -1,7 +1,7 @@
 model ProductVariation {
-  id            Int      @id @default(autoincrement())
+  id            String   @id @default(uuid())
   wooId         Int      @unique
-  productId     Int
+  productId     String 
   name          String // e.g. "T-Shirt - Large / Red"
   sku           String?
   imageUrl      String?

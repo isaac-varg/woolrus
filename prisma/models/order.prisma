@@ -1,9 +1,8 @@
 model Order {
-  id          Int    @id @default(autoincrement())
-  wooId       Int    @unique
-  orderNumber String
-  wooStatus   String @default("processing") // Status in WooCommerce
-
+  id              String         @id @default(uuid())
+  wooId           Int            @unique
+  orderNumber     String
+  wooStatus       String         @default("processing") // Status in WooCommerce
   customerName    String
   customerEmail   String?
   shippingAddress Json
@@ -14,7 +13,7 @@ model Order {
   wooCreatedAt    DateTime
   syncedAt        DateTime       @default(now()) // When we pulled it
   updatedAt       DateTime       @updatedAt
-  pickStatus      PickStatus     @default(PENDING)
+  workflowStatus  WorkflowStatus @default(PENDING)
   items           OrderItem[]
   workflow        OrderWorkflow?
 }

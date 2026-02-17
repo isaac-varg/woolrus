@@ -2,7 +2,7 @@ import { getOrder } from "@/actions/orders/getOrder"
 
 type Props = {
   searchParams: Promise<{
-    id: number
+    id: string
   }>
 }
 

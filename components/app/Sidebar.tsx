@@ -1,11 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { useApp, useAppActions } from "@/store/appSlice";
-import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarLeftExpand, TbLayoutSidebarRightCollapse } from "react-icons/tb";
+import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarLeftExpand } from "react-icons/tb";
 import { links } from "@/lib/sidebar/links";
 import SidebarButton from "./SidebarButton";
+import { useTranslations } from "next-intl";
 
 export default function Sidebar({
   initialCollapsed,
@@ -14,6 +15,7 @@ export default function Sidebar({
 }) {
   const { isSidebarCollapsed } = useApp()
   const { toggleSidebar, setSidebarCollapsed } = useAppActions();
+  const t = useTranslations();
 
   useEffect(() => {
     setSidebarCollapsed(initialCollapsed);
@@ -46,7 +48,7 @@ export default function Sidebar({
         >
           {links.map(link => <SidebarButton
             key={link.title}
-            title={link.title}
+            title={t(link.title)}
             path={link.path}
             icon={link.icon}
           />
@@ -57,11 +59,11 @@ export default function Sidebar({
 
 
 
-      {/* Botton Stuff - Sync + collapse */}
+      {/* Bottom Stuff - Sync + collapse */}
       <div className="flex flex-col gap-2 py-4">
         {!isSidebarCollapsed && (
           <span className="text-xs text-base-content/50">
-            Last Sync: 2 minutes ago
+            {t('sidebar.lastSync')}
           </span>
         )}
         <button
@@ -77,7 +79,7 @@ export default function Sidebar({
           ) : (
             <div className="flex gap-2">
               <TbLayoutSidebarLeftCollapse className="size-6" />
-              Collapse Sidebar
+              {t('sidebar.collapse')}
             </div>
           )}
         </button>

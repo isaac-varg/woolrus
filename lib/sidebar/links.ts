@@ -3,18 +3,18 @@ import { SidebarButton } from "@/components/app/SidebarButton";
 export const links: SidebarButton[] = [
   {
     path: '/orders?status=PENDING',
-    title: 'Pending',
+    title: 'sidebar.pending',
   },
   {
     path: '/orders?status=PICKING',
-    title: 'Picking',
+    title: 'sidebar.picking',
   },
   {
     path: '/orders?status=PACKING',
-    title: 'Packing',
+    title: 'sidebar.packing',
   },
   {
     path: '/orders?status=QA',
-    title: 'Quality',
+    title: 'sidebar.quality',
   },
 ]

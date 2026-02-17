@@ -1,25 +1,27 @@
-import { Order } from "@/actions/orders/getOrder"
 import { OrderWithItems } from "@/actions/orders/getOrders"
 import { formatDate } from "@/utils/date/formatDate"
+import { getTranslations } from "next-intl/server"
 
-const Table = ({ orders }: { orders: OrderWithItems[] }) => {
+const Table = async ({ orders }: { orders: OrderWithItems[] }) => {
+  const t = await getTranslations('orders.table')
+
   return (
     <div className="overflow-x-auto">
       <table className="table">
         <thead>
           <tr>
-            <th>Order #</th>
-            <th>Customer</th>
-            <th>Items</th>
-            <th>Priority</th>
-            <th>Order Date</th>
+            <th>{t('orderNumber')}</th>
+            <th>{t('customer')}</th>
+            <th>{t('items')}</th>
+            <th>{t('priority')}</th>
+            <th>{t('orderDate')}</th>
           </tr>
         </thead>
         <tbody>
           {orders.map((order) => {
             const priority = {
               badge: 'priority-high',
-              label: 'High'
+              label: t('priorityHigh')
             }
             return (
               <tr

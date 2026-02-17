@@ -38,7 +38,11 @@ export const THEMES = [
 
 export type Theme = (typeof THEMES)[number];
 
+export const LOCALES = ["en", "es"] as const;
+export type Locale = (typeof LOCALES)[number];
+
 export type UserPreferences = {
   theme: Theme;
   sidebarCollapsed: boolean;
+  locale: Locale;
 };

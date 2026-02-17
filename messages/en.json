@@ -1,0 +1,30 @@
+{
+  "sidebar": {
+    "pending": "Pending",
+    "picking": "Picking",
+    "packing": "Packing",
+    "quality": "Quality",
+    "collapse": "Collapse Sidebar",
+    "lastSync": "Last Sync: 2 minutes ago"
+  },
+  "login": {
+    "title": "Woolrus",
+    "tagline": "Pick, pack and verify with confidence.",
+    "signIn": "Sign in with Discord"
+  },
+  "orders": {
+    "searchPlaceholder": "Search by order number or customer or...",
+    "noPending": "No pending orders",
+    "noPicking": "No orders currently being picked",
+    "pending": "Pending",
+    "picking": "Picking",
+    "table": {
+      "orderNumber": "Order #",
+      "customer": "Customer",
+      "items": "Items",
+      "priority": "Priority",
+      "orderDate": "Order Date",
+      "priorityHigh": "High"
+    }
+  }
+}

@@ -6,6 +6,8 @@ import LoginScreen from "@/components/app/LoginScreen";
 import Sidebar from "@/components/app/Sidebar";
 import { getUserByEmail } from "@/actions/user/getUserByEmail";
 import { getUserPreferences } from "@/lib/preferences/getUserPreferences";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,20 +35,24 @@ export default async function RootLayout({
   const isAuthenticated = !!session?.user;
   const user = await getUserByEmail(session?.user?.email || '')
   const preferences = getUserPreferences(user);
+  const locale = await getLocale();
+  const messages = await getMessages();
 
   return (
-    <html lang="en" data-theme={preferences.theme} >
+    <html lang={locale} data-theme={preferences.theme} >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-base-200`}
       >
-        {isAuthenticated ? (
-          <div className="flex h-screen">
-            <Sidebar initialCollapsed={preferences.sidebarCollapsed} />
-            <main className="flex-1 overflow-auto">{children}</main>
-          </div>
-        ) : (
-          <LoginScreen />
-        )}
+        <NextIntlClientProvider messages={messages} locale={locale}>
+          {isAuthenticated ? (
+            <div className="flex h-screen">
+              <Sidebar initialCollapsed={preferences.sidebarCollapsed} />
+              <main className="flex-1 overflow-auto">{children}</main>
+            </div>
+          ) : (
+            <LoginScreen />
+          )}
+        </NextIntlClientProvider>
       </body>
     </html>
   );

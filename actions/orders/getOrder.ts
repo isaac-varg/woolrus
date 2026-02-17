@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma"
 
-export const getOrder = async (orderId: number) => {
+export const getOrder = async (orderId: string) => {
 
   const order = await prisma.order.findUnique({
     where: {

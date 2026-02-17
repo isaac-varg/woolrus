@@ -1,12 +1,8 @@
-'use client'
+import { Order } from "@/actions/orders/getOrder"
 import { OrderWithItems } from "@/actions/orders/getOrders"
 import { formatDate } from "@/utils/date/formatDate"
-import { useRouter } from "next/navigation"
 
 const Table = ({ orders }: { orders: OrderWithItems[] }) => {
-
-  const router = useRouter()
-
   return (
     <div className="overflow-x-auto">
       <table className="table">
@@ -29,7 +25,6 @@ const Table = ({ orders }: { orders: OrderWithItems[] }) => {
               <tr
                 key={order.id}
                 className="hover:bg-accent/50 hover:cursor:pointer"
-                onClick={() => router.push(`/orders/${order.orderNumber}?id=${order.id}`)}
               >
                 <td className="font-mono">{order.orderNumber}</td>
                 <td>{order.customerName}</td>

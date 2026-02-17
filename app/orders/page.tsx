@@ -1,9 +1,10 @@
-import { PickStatus } from "@/prisma/generated/enums"
-import Pending from "./_components/pending/Pending"
+import { WorkflowStatus } from "@/prisma/generated/enums"
+import OrdersPending from "./_components/pending/Pending"
+import OrdersPicking from "./_components/picking/Picking"
 
 type Props = {
   searchParams: Promise<{
-    status: PickStatus
+    status: WorkflowStatus
   }>
 }
 
@@ -13,7 +14,9 @@ const Orders = async ({ searchParams }: Props) => {
 
   switch (status) {
     case 'PENDING':
-      return <Pending />
+      return <OrdersPending />
+    case 'PICKING':
+      return <OrdersPicking />
     default:
       return false;
   }

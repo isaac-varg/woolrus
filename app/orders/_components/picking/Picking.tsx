@@ -2,22 +2,15 @@ import { getOrders } from "@/actions/orders/getOrders"
 import Table from "./Table"
 import { LuSearch } from "react-icons/lu"
 
-const OrdersPending = async () => {
-  const orders = await getOrders("PENDING")
+const OrdersPicking = async () => {
+  const orders = await getOrders("PICKING")
 
-  if (orders.length === 0) {
-    return (
-      <div className="flex items-center justify-center py-16 text-base-content/50">
-        No pending orders
-      </div>
-    )
-  }
 
   return (
     <div className="flex flex-col gap-6 py-8 px-12">
 
       <div className="flex flex-col gap-y-6">
-        <div className="text-4xl text-base-content font-semibold">Pending</div>
+        <div className="text-4xl text-base-content font-semibold">Picking</div>
 
         <div className="flex-1 relative">
           <LuSearch className="absolute left-4 top-1/2 -translate-y-1/2 size-5 text-zinc-400" />
@@ -28,16 +21,21 @@ const OrdersPending = async () => {
           />
         </div>
 
+        {orders.length === 0 && (
+          <div className="flex items-center justify-center py-16 text-base-content/50">
+            No orders currently being picked
+          </div>
+
+        )}
+
         {/*  <div className="border-b border-primary" />*/}
       </div>
 
-
-
-
-
-      <Table orders={orders} />
+      {orders.length !== 0 && (
+        <Table orders={orders} />
+      )}
     </div>
   )
 }
 
-export default OrdersPending
+export default OrdersPicking

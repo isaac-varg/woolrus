@@ -1,9 +1,9 @@
 'use server'
 
 import prisma from "@/lib/prisma"
-import { PickStatus } from "@/prisma/generated/enums"
+import { WorkflowStatus } from "@/prisma/generated/enums"
 
-export const getOrders = async (status?: PickStatus) => {
+export const getOrders = async (status?: WorkflowStatus) => {
 
   const options = {
     include: {
@@ -12,7 +12,7 @@ export const getOrders = async (status?: PickStatus) => {
     orderBy: {
       wooCreatedAt: 'asc' as const,
     },
-    ...(status && { where: { pickStatus: status } }),
+    ...(status && { where: { workflowStatus: status } }),
   }
 
   return await prisma.order.findMany(options);

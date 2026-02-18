@@ -29,5 +29,9 @@
   },
   "orderPending": {
     "startButton": "Begin Picking"
+  },
+  "orderPicking": {
+    "completeToPending": "Complete Picking → Go To Pending",
+    "completeToPacking": "Complete Picking → Go To Packing"
   }
 }

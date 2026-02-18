@@ -26,5 +26,12 @@
       "orderDate": "Fecha de Orden",
       "priorityHigh": "Alta"
     }
+  },
+  "orderPending": {
+    "startButton": "Comenzar Picking"
+  },
+  "orderPicking": {
+    "completeToPending": "Completar Picking → Ir a Pendiente",
+    "completeToPacking": "Completar Picking → Ir a Empaque"
   }
 }

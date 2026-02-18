@@ -1,5 +1,5 @@
 import { FaTimes } from "react-icons/fa";
-import { LuCircle, LuCircleCheck } from "react-icons/lu";
+import { LuCircle, LuCircleCheckBig } from "react-icons/lu";
 import { Order } from "@/actions/orders/getOrder"
 import Image from "next/image"
 
@@ -14,7 +14,10 @@ const ItemCard = ({ item, completed, onToggle }: Props) => {
   const attributes = item.attributes as Record<string, string> | null
 
   return (
-    <div className="relative card card-side bg-base-100 shadow-md">
+    <div
+      onClick={() => onToggle?.(item)}
+      className={`relative card card-side shadow-md border-2 transition-colors ${onToggle ? 'cursor-pointer' : ''} ${completed ? 'border-success bg-success/20' : 'border-transparent bg-base-100'}`}
+    >
 
       {item.imageUrl && (
         <figure className="w-56 shrink-0">
@@ -47,8 +50,8 @@ const ItemCard = ({ item, completed, onToggle }: Props) => {
           </div>
 
           <span className="font-semibold text-5xl text-base-content">{item.quantity}</span>
-          {/* 
-          not sure if we want price here 
+          {/*
+          not sure if we want price here
           <div className="font-semibold text-base-content">
             ${(item.price * item.quantity).toFixed(2)}
           </div>
@@ -56,17 +59,14 @@ const ItemCard = ({ item, completed, onToggle }: Props) => {
         </div>
       </div>
 
-    {onToggle && (
-      <button
-        onClick={() => onToggle(item)}
-        className="absolute right-4 top-1/2 -translate-y-1/2 text-base-content/40 hover:text-base-content transition-colors"
-      >
-        {completed
-          ? <LuCircleCheck className="size-10" />
-          : <LuCircle className="size-10" />
-        }
-      </button>
-    )}
+      {onToggle && (
+        <div className={`absolute right-4 top-1/2 -translate-y-1/2 transition-colors ${completed ? 'text-success' : 'text-base-content/40'}`}>
+          {completed
+            ? <LuCircleCheckBig className="size-10" />
+            : <LuCircle className="size-10" />
+          }
+        </div>
+      )}
 
     </div>
   )

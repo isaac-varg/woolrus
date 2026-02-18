@@ -1,17 +1,20 @@
 import { FaTimes } from "react-icons/fa";
+import { LuCircle, LuCircleCheck } from "react-icons/lu";
 import { Order } from "@/actions/orders/getOrder"
 import Image from "next/image"
 
 type Props = {
   item: Order['items'][number];
+  completed?: boolean;
+  onToggle?: (item: Order['items'][number]) => void;
 }
 
-const ItemCard = ({ item }: Props) => {
+const ItemCard = ({ item, completed, onToggle }: Props) => {
 
   const attributes = item.attributes as Record<string, string> | null
 
   return (
-    <div className="card card-side bg-base-100 shadow-md">
+    <div className="relative card card-side bg-base-100 shadow-md">
 
       {item.imageUrl && (
         <figure className="w-56 shrink-0">
@@ -52,6 +55,18 @@ const ItemCard = ({ item }: Props) => {
           */}
         </div>
       </div>
+
+    {onToggle && (
+      <button
+        onClick={() => onToggle(item)}
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-base-content/40 hover:text-base-content transition-colors"
+      >
+        {completed
+          ? <LuCircleCheck className="size-10" />
+          : <LuCircle className="size-10" />
+        }
+      </button>
+    )}
 
     </div>
   )

@@ -21,6 +21,9 @@ const OrderPage = async ({ searchParams }: Props) => {
     case 'PENDING':
       content = <Pending />
       break
+    case "PICKING":
+      content = <Picking />
+      break
     default:
       content = null
   }

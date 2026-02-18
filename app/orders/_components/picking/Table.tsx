@@ -1,9 +1,12 @@
+'use client'
 import { OrderWithItems } from "@/actions/orders/getOrders"
 import { formatDate } from "@/utils/date/formatDate"
-import { getTranslations } from "next-intl/server"
+import { useTranslations } from "next-intl"
+import { useRouter } from "next/navigation"
 
-const Table = async ({ orders }: { orders: OrderWithItems[] }) => {
-  const t = await getTranslations('orders.table')
+const Table = ({ orders }: { orders: OrderWithItems[] }) => {
+  const t = useTranslations('orders.table')
+  const router = useRouter()
 
   return (
     <div className="overflow-x-auto">
@@ -26,6 +29,7 @@ const Table = async ({ orders }: { orders: OrderWithItems[] }) => {
             return (
               <tr
                 key={order.id}
+                onClick={() => router.push(`/orders/${order.orderNumber}?id=${order.id}`)}
                 className="hover:bg-accent/50 hover:cursor:pointer"
               >
                 <td className="font-mono">{order.orderNumber}</td>

@@ -26,5 +26,8 @@
       "orderDate": "Order Date",
       "priorityHigh": "High"
     }
+  },
+  "orderPending": {
+    "startButton": "Begin Picking"
   }
 }

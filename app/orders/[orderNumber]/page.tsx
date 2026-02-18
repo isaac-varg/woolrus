@@ -1,4 +1,7 @@
 import { getOrder } from "@/actions/orders/getOrder"
+import Picking from "./picking/Picking"
+import Pending from "./pending/Pending"
+import State from "./shared/State"
 
 type Props = {
   searchParams: Promise<{
@@ -8,16 +11,28 @@ type Props = {
 
 const OrderPage = async ({ searchParams }: Props) => {
 
-
   const { id } = await searchParams
   const order = await getOrder(id)
 
+  // switching the content so we can set the zustand state
+  let content;
+
   switch (order.workflowStatus) {
     case 'PENDING':
-      return <div>{JSON.stringify(order, null, 2)}</div>
+      content = <Pending />
+      break
     default:
-      return false
+      content = null
   }
+
+  return (
+    <>
+      <State
+        order={order}
+      />
+      {content}
+    </>
+  )
 
 }
 

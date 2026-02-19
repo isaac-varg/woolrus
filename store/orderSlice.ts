@@ -11,6 +11,8 @@ interface OrderActions {
     setOrder: (order: Order | null) => void;
     updateItemPickStatus: (itemId: string, status: PickStatus) => void;
     updateItemPackStatus: (itemId: string, isPacked: boolean) => void;
+    assignItemToPackage: (itemId: string, packageId: string) => void;
+    removeItemFromPackage: (itemId: string) => void;
   }
 }
 
@@ -37,6 +39,28 @@ export const useOrder = create<OrderState & OrderActions>((set) => ({
           ...state.order,
           items: state.order.items.map((item) =>
             item.id === itemId ? { ...item, isPacked } : item
+          ),
+        },
+      }
+    }),
+    assignItemToPackage: (itemId, packageId) => set((state) => {
+      if (!state.order) return state
+      return {
+        order: {
+          ...state.order,
+          items: state.order.items.map((item) =>
+            item.id === itemId ? { ...item, packageId } : item
+          ),
+        },
+      }
+    }),
+    removeItemFromPackage: (itemId) => set((state) => {
+      if (!state.order) return state
+      return {
+        order: {
+          ...state.order,
+          items: state.order.items.map((item) =>
+            item.id === itemId ? { ...item, packageId: null } : item
           ),
         },
       }

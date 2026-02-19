@@ -19,4 +19,6 @@ model OrderItem {
   pickedById     String?
   pickedBy       User?             @relation(fields: [pickedById], references: [id])
   isPacked       Boolean           @default(false)
+  packageId      String?
+  package        Package?          @relation(fields: [packageId], references: [id], onDelete: SetNull)
 }

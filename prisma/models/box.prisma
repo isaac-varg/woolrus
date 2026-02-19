@@ -1,0 +1,12 @@
+model Box {
+  id        String    @id @default(uuid())
+  name      String
+  length    Float
+  width     Float
+  height    Float
+  maxWeight Float?
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  packages  Package[]
+}

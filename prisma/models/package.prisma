@@ -1,0 +1,11 @@
+model Package {
+  id        String      @id @default(uuid())
+  orderId   String
+  boxId     String
+  weight    Float?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  order     Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  box       Box         @relation(fields: [boxId], references: [id], onDelete: Restrict)
+  items     OrderItem[]
+}

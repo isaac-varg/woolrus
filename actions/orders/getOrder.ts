@@ -22,6 +22,10 @@ export const getOrder = async (orderId: string) => {
             select: { id: true, name: true, image: true }
           }
         }
+      },
+      packages: {
+        include: { box: true },
+        orderBy: { createdAt: 'asc' },
       }
     }
   });

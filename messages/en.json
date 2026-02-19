@@ -37,6 +37,24 @@
   },
   "orderPacking": {
     "pickedBy": "Picked by",
-    "manageBoxesButton": "Manage Boxes"
+    "manageBoxesButton": "Manage Boxes",
+    "selectBox": "Select a box type",
+    "addPackage": "Add Package",
+    "removePackage": "Remove Package",
+    "package": "Package",
+    "unassignedItems": "Unassigned Items",
+    "assignedItems": "Items in this Package",
+    "completePacking": "Complete Packing",
+    "allItemsMustBeAssigned": "All items must be assigned to a package before completing.",
+    "noPackagesYet": "No packages yet. Add a package to get started.",
+    "boxDimensions": "{length}\" x {width}\" x {height}\"",
+    "maxWeight": "Max {weight} lbs",
+    "itemCount": "{count, plural, =0 {No items} one {# item} other {# items}}",
+    "weight": "Weight",
+    "weightPlaceholder": "Package weight",
+    "lbs": "lbs",
+    "addItem": "Add",
+    "removeItem": "Remove",
+    "backToPackages": "All Packages"
   }
 }

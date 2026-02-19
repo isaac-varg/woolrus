@@ -21,6 +21,10 @@ export const updateOrderStatus = async (orderId: string, status: WorkflowStatus)
             select: { id: true, name: true, image: true }
           }
         }
+      },
+      packages: {
+        include: { box: true },
+        orderBy: { createdAt: 'asc' },
       }
     },
   })

@@ -5,7 +5,7 @@ import WorkflowHistory from "./WorkflowHistory"
 import StepWizard from "@/components/ui/StepWizard"
 import { LuBox, LuNotebookText } from "react-icons/lu"
 import ItemVerification from "./ItemVerification"
-import BoxManager from "./BoxManager"
+import PackageManager from "./PackageManager"
 
 const Packing = () => {
   const [step, setStep] = useState(0)
@@ -32,7 +32,7 @@ const Packing = () => {
         onStepChange={setStep}
       >
         <ItemVerification onNext={() => setStep(1)} />
-        <BoxManager />
+        <PackageManager />
       </StepWizard>
 
     </div>

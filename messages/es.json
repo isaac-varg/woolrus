@@ -37,6 +37,24 @@
   },
   "orderPacking": {
     "pickedBy": "Empacado por",
-    "manageBoxesButton": "Gestionar Cajas"
+    "manageBoxesButton": "Gestionar Cajas",
+    "selectBox": "Seleccionar tipo de caja",
+    "addPackage": "Agregar Paquete",
+    "removePackage": "Quitar Paquete",
+    "package": "Paquete",
+    "unassignedItems": "Artículos sin asignar",
+    "assignedItems": "Artículos en este paquete",
+    "completePacking": "Completar Empaque",
+    "allItemsMustBeAssigned": "Todos los artículos deben estar asignados a un paquete antes de completar.",
+    "noPackagesYet": "No hay paquetes aún. Agrega un paquete para comenzar.",
+    "boxDimensions": "{length}\" x {width}\" x {height}\"",
+    "maxWeight": "Máx {weight} lbs",
+    "itemCount": "{count, plural, =0 {Sin artículos} one {# artículo} other {# artículos}}",
+    "weight": "Peso",
+    "weightPlaceholder": "Peso del paquete",
+    "lbs": "lbs",
+    "addItem": "Agregar",
+    "removeItem": "Quitar",
+    "backToPackages": "Todos los Paquetes"
   }
 }

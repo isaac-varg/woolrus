@@ -16,4 +16,5 @@ model Order {
   workflowStatus  WorkflowStatus @default(PENDING)
   items           OrderItem[]
   workflow        OrderWorkflow?
+  packages        Package[]
 }

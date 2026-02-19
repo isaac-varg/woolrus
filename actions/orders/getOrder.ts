@@ -9,7 +9,13 @@ export const getOrder = async (orderId: string) => {
       id: orderId,
     },
     include: {
-      items: true
+      items: {
+        include: {
+          pickedBy: {
+            select: { id: true, name: true, image: true }
+          }
+        }
+      }
     }
   });
 

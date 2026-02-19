@@ -37,7 +37,7 @@ export default function Sidebar({
             className="shrink-0"
           />
           {!isSidebarCollapsed && (
-            <span className="text-3xl text-primary-content font-semibold whitespace-nowrap">
+            <span className="text-3xl text-base-content font-semibold whitespace-nowrap">
               Woolrus
             </span>
           )}

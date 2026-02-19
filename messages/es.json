@@ -17,7 +17,8 @@
     "noPending": "No hay órdenes pendientes",
     "noPicking": "No hay órdenes en picking",
     "pending": "Pendientes",
-    "picking": "En Picking",
+    "picking": "Escogiendo",
+    "packing": "Enpacando",
     "table": {
       "orderNumber": "Orden #",
       "customer": "Cliente",
@@ -33,5 +34,8 @@
   "orderPicking": {
     "completeToPending": "Completar Picking → Ir a Pendiente",
     "completeToPacking": "Completar Picking → Ir a Empaque"
+  },
+  "orderPacking": {
+    "pickedBy": "Empacado por"
   }
 }

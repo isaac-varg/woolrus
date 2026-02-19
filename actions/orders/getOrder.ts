@@ -15,6 +15,13 @@ export const getOrder = async (orderId: string) => {
             select: { id: true, name: true, image: true }
           }
         }
+      },
+      workflow: {
+        include: {
+          packedBy: {
+            select: { id: true, name: true, image: true }
+          }
+        }
       }
     }
   });

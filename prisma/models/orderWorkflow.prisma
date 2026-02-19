@@ -5,7 +5,9 @@ model OrderWorkflow {
 
   // Assignment & tracking
   assignedToId String?
-  assignedTo   User?   @relation(fields: [assignedToId], references: [id])
+  assignedTo   User?   @relation("OrderWorkflowAssignedTo", fields: [assignedToId], references: [id])
+  packedById   String?
+  packedBy     User?   @relation("OrderWorkflowPackedBy", fields: [packedById], references: [id])
 
   // Timestamps for each stage
   pickStartedAt   DateTime?

@@ -7,6 +7,21 @@ export const updateOrderStatus = async (orderId: string, status: WorkflowStatus)
   return await prisma.order.update({
     where: { id: orderId },
     data: { workflowStatus: status },
-    include: { items: true },
+    include: {
+      items: {
+        include: {
+          pickedBy: {
+            select: { id: true, name: true, image: true }
+          }
+        }
+      },
+      workflow: {
+        include: {
+          packedBy: {
+            select: { id: true, name: true, image: true }
+          }
+        }
+      }
+    },
   })
 }

@@ -18,4 +18,5 @@ model OrderItem {
   pickedAt       DateTime?
   pickedById     String?
   pickedBy       User?             @relation(fields: [pickedById], references: [id])
+  isPacked       Boolean           @default(false)
 }

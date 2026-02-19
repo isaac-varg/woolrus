@@ -1,17 +1,18 @@
 'use client'
 
-import { useState, Children, isValidElement } from 'react'
+import { Children, isValidElement } from 'react'
 import StepTrack, { type StepConfig } from './StepTrack'
 
 interface StepWizardProps {
   steps: StepConfig[]
+  currentStep: number
+  onStepChange: (step: number) => void
   children: React.ReactNode
-  // allow clicking past steps to navigate back/foward  
+  // allow clicking past steps to navigate back/foward
   navigable?: boolean
 }
 
-const StepWizard = ({ steps, children, navigable = true }: StepWizardProps) => {
-  const [currentStep, setCurrentStep] = useState(0)
+const StepWizard = ({ steps, currentStep, onStepChange, children, navigable = true }: StepWizardProps) => {
 
   const panels = Children.toArray(children).filter(isValidElement)
 
@@ -20,7 +21,7 @@ const StepWizard = ({ steps, children, navigable = true }: StepWizardProps) => {
       <StepTrack
         steps={steps}
         currentStep={currentStep}
-        onStepClick={navigable ? setCurrentStep : undefined}
+        onStepClick={navigable ? onStepChange : undefined}
       />
       <div>
         {panels[currentStep]}

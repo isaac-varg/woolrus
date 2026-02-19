@@ -36,6 +36,7 @@
     "completeToPacking": "Completar Picking → Ir a Empaque"
   },
   "orderPacking": {
-    "pickedBy": "Empacado por"
+    "pickedBy": "Empacado por",
+    "manageBoxesButton": "Gestionar Cajas"
   }
 }

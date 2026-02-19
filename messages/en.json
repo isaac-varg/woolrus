@@ -36,6 +36,7 @@
     "completeToPacking": "Complete Picking → Go To Packing"
   },
   "orderPacking": {
-    "pickedBy": "Picked by"
+    "pickedBy": "Picked by",
+    "manageBoxesButton": "Manage Boxes"
   }
 }

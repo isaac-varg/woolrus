@@ -4,14 +4,18 @@ import Image from "next/image"
 
 type Props = {
   item: Order['items'][number];
+  onClick?: (item: Order['items'][number]) => void;
 }
 
-const PackageItemCard = ({ item }: Props) => {
+const PackageItemCard = ({ item, onClick }: Props) => {
 
   const attributes = item.attributes as Record<string, string> | null
 
   return (
-    <div className="relative card card-side shadow-md border-2 border-transparent bg-base-100">
+    <div
+      onClick={() => onClick?.(item)}
+      className={`relative card card-side shadow-md border-2 border-transparent bg-base-100 ${onClick ? 'cursor-pointer' : ''}`}
+    >
 
       {item.imageUrl && (
         <figure className="w-56 shrink-0">

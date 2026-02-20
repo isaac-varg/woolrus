@@ -9,6 +9,7 @@ interface OrderState {
 interface OrderActions {
   actions: {
     setOrder: (order: Order | null) => void;
+    syncItems: (items: Order['items']) => void;
     updateItemPickStatus: (itemId: string, status: PickStatus) => void;
     updateItemPackStatus: (itemId: string, isPacked: boolean) => void;
     assignItemToPackage: (itemId: string, packageId: string) => void;
@@ -21,6 +22,10 @@ export const useOrder = create<OrderState & OrderActions>((set) => ({
 
   actions: {
     setOrder: (order) => set(() => ({ order })),
+    syncItems: (items) => set((state) => {
+      if (!state.order) return state
+      return { order: { ...state.order, items } }
+    }),
     updateItemPickStatus: (itemId, status) => set((state) => {
       if (!state.order) return state
       return {

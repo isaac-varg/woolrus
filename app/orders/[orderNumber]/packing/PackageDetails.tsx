@@ -8,7 +8,7 @@ import PackageItemCard from "./PackageItemCard"
 
 const PackageDetails = () => {
   const { order } = useOrder()
-  const { assignItemToPackage: assignItem, removeItemFromPackage: removeItem } = useOrderActions()
+  const { syncItems } = useOrderActions()
   const { setView, clearSelectedPackage } = usePackageActions()
   const selectedPackageId = usePackage((state) => state.selectedPackageId)
 
@@ -18,13 +18,13 @@ const PackageDetails = () => {
 
   const handleAssign = async (item: Order['items'][number]) => {
     if (!selectedPackageId) return
-    assignItem(item.id, selectedPackageId)
-    await assignItemToPackage(item.id, selectedPackageId)
+    const items = await assignItemToPackage(item.id, selectedPackageId)
+    syncItems(items)
   }
 
   const handleRemove = async (item: Order['items'][number]) => {
-    removeItem(item.id)
-    await removeItemFromPackage(item.id)
+    const items = await removeItemFromPackage(item.id)
+    syncItems(items)
   }
 
   if (!pkg) return null
@@ -71,7 +71,7 @@ const PackageDetails = () => {
           <div className="text-lg text-base-content/60">No items assigned yet.</div>
         )}
         {packageItems.map(item => (
-          <PackageItemCard key={item.id} item={item} />
+          <PackageItemCard key={item.id} item={item} onClick={handleRemove} />
         ))}
       </div>
 
@@ -83,7 +83,7 @@ const PackageDetails = () => {
           <div className="text-lg text-base-content/60">All items have been assigned.</div>
         )}
         {unassignedItems.map(item => (
-          <PackageItemCard key={item.id} item={item} />
+          <PackageItemCard key={item.id} item={item} onClick={handleAssign} />
         ))}
       </div>
 

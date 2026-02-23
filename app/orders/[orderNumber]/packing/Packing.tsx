@@ -6,6 +6,7 @@ import StepWizard from "@/components/ui/StepWizard"
 import { LuBox, LuNotebookText } from "react-icons/lu"
 import ItemVerification from "./ItemVerification"
 import PackageManager from "./PackageManager"
+import UnassignedItemsWarning from "./UnassignedItemsWarning"
 
 const Packing = () => {
   const [step, setStep] = useState(0)
@@ -16,6 +17,8 @@ const Packing = () => {
       <Top />
 
       <WorkflowHistory />
+
+      <UnassignedItemsWarning />
 
       <StepWizard
         steps={[

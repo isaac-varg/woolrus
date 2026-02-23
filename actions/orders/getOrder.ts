@@ -20,6 +20,9 @@ export const getOrder = async (orderId: string) => {
         include: {
           packedBy: {
             select: { id: true, name: true, image: true }
+          },
+          qaBy: {
+            select: { id: true, name: true, image: true }
           }
         }
       },

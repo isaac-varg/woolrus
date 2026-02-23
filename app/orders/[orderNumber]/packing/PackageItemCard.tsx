@@ -14,7 +14,7 @@ const PackageItemCard = ({ item, onClick }: Props) => {
   return (
     <div
       onClick={() => onClick?.(item)}
-      className={`relative card card-side shadow-md border-2 border-transparent bg-base-100 ${onClick ? 'cursor-pointer' : ''}`}
+      className={`relative card card-side shadow-md border-2 border-transparent h-60 bg-base-100 overflow-hidden ${onClick ? 'cursor-pointer' : ''}`}
     >
 
       {item.imageUrl && (

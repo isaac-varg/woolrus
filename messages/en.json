@@ -16,9 +16,11 @@
     "searchPlaceholder": "Search by order number or customer or...",
     "noPending": "No pending orders",
     "noPicking": "No orders currently being picked",
+    "noQA": "No orders in quality review",
     "pending": "Pending",
     "picking": "Picking",
     "packing": "Packing",
+    "quality": "Quality",
     "table": {
       "orderNumber": "Order #",
       "customer": "Customer",

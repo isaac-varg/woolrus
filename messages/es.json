@@ -16,9 +16,11 @@
     "searchPlaceholder": "Buscar por número de orden o cliente o...",
     "noPending": "No hay órdenes pendientes",
     "noPicking": "No hay órdenes en picking",
+    "noQA": "No hay órdenes en revisión de calidad",
     "pending": "Pendientes",
     "picking": "Escogiendo",
     "packing": "Enpacando",
+    "quality": "Calidad",
     "table": {
       "orderNumber": "Orden #",
       "customer": "Cliente",

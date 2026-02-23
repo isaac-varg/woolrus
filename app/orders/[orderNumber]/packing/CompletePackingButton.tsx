@@ -16,7 +16,7 @@ const CompletePackingButton = () => {
     if (!order) return
     const updated = await completePacking(order.id)
     setOrder(updated)
-    router.push('/orders')
+    router.push('/orders?status=PACKING')
   }
 
   return (

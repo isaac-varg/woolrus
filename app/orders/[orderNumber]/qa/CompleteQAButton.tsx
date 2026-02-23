@@ -21,7 +21,7 @@ const CompleteQAButton = () => {
     if (!order) return
     const updated = await completeQA(order.id)
     setOrder(updated)
-    router.push('/orders')
+    router.push('/orders?status=QA')
   }
 
   return (

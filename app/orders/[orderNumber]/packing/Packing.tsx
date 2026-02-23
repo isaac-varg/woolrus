@@ -7,6 +7,8 @@ import { LuBox, LuNotebookText } from "react-icons/lu"
 import ItemVerification from "./ItemVerification"
 import PackageManager from "./PackageManager"
 import UnassignedItemsWarning from "./UnassignedItemsWarning"
+import MissingWeightsWarning from "./MissingWeightsWarning"
+import CompletePackingButton from "./CompletePackingButton"
 
 const Packing = () => {
   const [step, setStep] = useState(0)
@@ -19,6 +21,9 @@ const Packing = () => {
       <WorkflowHistory />
 
       <UnassignedItemsWarning />
+      <MissingWeightsWarning />
+
+      <CompletePackingButton />
 
       <StepWizard
         steps={[

@@ -2,7 +2,6 @@ import { usePackage } from "@/store/packageSlice"
 import PackagesView from "./PackagesView"
 import PackageDetails from "./PackageDetails"
 import PackageAdd from "./PackageAdd"
-
 const PackageManager = () => {
   const { view } = usePackage()
 
@@ -17,6 +16,7 @@ const PackageManager = () => {
       {view === 'packageDetails' && <PackageDetails />}
 
       {view === 'addPackage' && <PackageAdd />}
+
 
     </div>
   )

@@ -37,6 +37,10 @@
     "completeToPending": "Complete Picking → Go To Pending",
     "completeToPacking": "Complete Picking → Go To Packing"
   },
+  "orderQA": {
+    "pickedBy": "Picked by",
+    "packedBy": "Packed by"
+  },
   "orderPacking": {
     "pickedBy": "Picked by",
     "manageBoxesButton": "Manage Boxes",

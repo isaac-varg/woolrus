@@ -3,6 +3,7 @@ import Picking from "./picking/Picking"
 import Pending from "./pending/Pending"
 import State from "./shared/State"
 import Packing from "./packing/Packing"
+import QA from "./qa/QA"
 
 type Props = {
   searchParams: Promise<{
@@ -27,6 +28,9 @@ const OrderPage = async ({ searchParams }: Props) => {
       break
     case "PACKING":
       content = <Packing />
+      break
+    case "QA":
+      content = <QA />
       break
     default:
       content = null

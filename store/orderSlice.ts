@@ -12,6 +12,7 @@ interface OrderActions {
     syncItems: (items: Order['items']) => void;
     updateItemPickStatus: (itemId: string, status: PickStatus) => void;
     updateItemPackStatus: (itemId: string, isPacked: boolean) => void;
+    updateItemQAStatus: (itemId: string, isQAVerified: boolean) => void;
     assignItemToPackage: (itemId: string, packageId: string) => void;
     removeItemFromPackage: (itemId: string) => void;
   }
@@ -44,6 +45,17 @@ export const useOrder = create<OrderState & OrderActions>((set) => ({
           ...state.order,
           items: state.order.items.map((item) =>
             item.id === itemId ? { ...item, isPacked } : item
+          ),
+        },
+      }
+    }),
+    updateItemQAStatus: (itemId, isQAVerified) => set((state) => {
+      if (!state.order) return state
+      return {
+        order: {
+          ...state.order,
+          items: state.order.items.map((item) =>
+            item.id === itemId ? { ...item, isQAVerified } : item
           ),
         },
       }

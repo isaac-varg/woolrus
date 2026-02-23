@@ -37,6 +37,10 @@
     "completeToPending": "Completar Picking → Ir a Pendiente",
     "completeToPacking": "Completar Picking → Ir a Empaque"
   },
+  "orderQA": {
+    "pickedBy": "Recogido por",
+    "packedBy": "Empacado por"
+  },
   "orderPacking": {
     "pickedBy": "Empacado por",
     "manageBoxesButton": "Gestionar Cajas",

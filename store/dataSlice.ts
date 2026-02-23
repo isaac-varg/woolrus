@@ -11,7 +11,7 @@ interface DataActions {
   }
 }
 
-export const useApp = create<DataState & DataActions>((set, get) => ({
+export const useData = create<DataState & DataActions>((set, get) => ({
   boxes: [],
 
   actions: {
@@ -26,4 +26,4 @@ export const useApp = create<DataState & DataActions>((set, get) => ({
   }
 }))
 
-export const useDataActions = () => useApp((state) => state.actions)
+export const useDataActions = () => useData((state) => state.actions)

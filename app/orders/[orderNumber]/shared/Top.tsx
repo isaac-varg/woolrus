@@ -20,12 +20,6 @@ const Top = () => {
   return (
     <div className="flex justify-between">
       <div className="flex flex-col gap-8">
-        <div>
-          <button className="btn btn-lg btn-outline" onClick={() => router.back()}>
-            <LuArrowLeft className="size-8" />
-            Back
-          </button>
-        </div>
 
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-4">
@@ -59,6 +53,13 @@ const Top = () => {
 
           </div>
         </div>
+        <div>
+          <button className="btn btn-lg btn-outline" onClick={() => router.back()}>
+            <LuArrowLeft className="size-8" />
+            Back
+          </button>
+        </div>
+
       </div>
 
       {order?.workflowStatus}

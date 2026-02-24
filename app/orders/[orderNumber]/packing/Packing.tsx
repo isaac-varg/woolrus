@@ -16,9 +16,12 @@ const Packing = () => {
   return (
     <div className="flex flex-col gap-6">
 
-      <Top />
+      <div className="flex justify-between items-start">
+        <Top />
 
-      <WorkflowHistory />
+        <WorkflowHistory />
+
+      </div>
 
       <UnassignedItemsWarning />
       <MissingWeightsWarning />

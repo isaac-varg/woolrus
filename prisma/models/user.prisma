@@ -17,4 +17,5 @@ model User {
   orderWorkflowsAssigned  OrderWorkflow[] @relation("OrderWorkflowAssignedTo")
   orderWorkflowsPacked    OrderWorkflow[] @relation("OrderWorkflowPackedBy")
   orderWorkflowsQA        OrderWorkflow[] @relation("OrderWorkflowQABy")
+  notes                   Note[]
 }

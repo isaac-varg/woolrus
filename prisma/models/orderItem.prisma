@@ -22,4 +22,5 @@ model OrderItem {
   isQAVerified   Boolean           @default(false)
   packageId      String?
   package        Package?          @relation(fields: [packageId], references: [id], onDelete: SetNull)
+  notes          Note[]
 }

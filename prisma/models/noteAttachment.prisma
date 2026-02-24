@@ -1,0 +1,15 @@
+enum NoteMediaType {
+  IMAGE
+  VOICE
+}
+
+model NoteAttachment {
+  id        String        @id @default(uuid())
+  noteId    String
+  s3Key     String
+  mediaType NoteMediaType
+  fileName  String?
+  fileSize  Int?
+  createdAt DateTime      @default(now())
+  note      Note          @relation(fields: [noteId], references: [id], onDelete: Cascade)
+}

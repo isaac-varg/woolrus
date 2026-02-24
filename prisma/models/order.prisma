@@ -17,4 +17,5 @@ model Order {
   items           OrderItem[]
   workflow        OrderWorkflow?
   packages        Package[]
+  notes           Note[]
 }

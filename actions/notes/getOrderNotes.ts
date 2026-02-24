@@ -11,6 +11,7 @@ export const getOrderNotes = async (orderId: string) => {
       OR: [
         { orderId },
         { orderItem: { orderId } },
+        { package: { orderId } },
       ],
     },
     include: {
@@ -20,6 +21,9 @@ export const getOrderNotes = async (orderId: string) => {
       attachments: true,
       orderItem: {
         select: { id: true, name: true },
+      },
+      package: {
+        select: { id: true },
       },
     },
     orderBy: { createdAt: 'desc' },

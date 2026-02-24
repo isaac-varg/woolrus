@@ -7,14 +7,16 @@ import { getUserByEmail } from "@/actions/user/getUserByEmail"
 export const createNote = async ({
   orderId,
   orderItemId,
+  packageId,
   content,
 }: {
   orderId?: string
   orderItemId?: string
+  packageId?: string
   content?: string
 }) => {
-  if (!orderId && !orderItemId) {
-    throw new Error("At least one of orderId or orderItemId must be provided.")
+  if (!orderId && !orderItemId && !packageId) {
+    throw new Error("At least one of orderId, orderItemId, or packageId must be provided.")
   }
 
   const session = await auth()
@@ -28,6 +30,7 @@ export const createNote = async ({
     data: {
       orderId,
       orderItemId,
+      packageId,
       authorId: user.id,
       content,
     },

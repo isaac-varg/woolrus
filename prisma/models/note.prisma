@@ -2,12 +2,14 @@ model Note {
   id          String           @id @default(uuid())
   orderId     String?
   orderItemId String?
+  packageId   String?
   authorId    String
   content     String?
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
   order       Order?           @relation(fields: [orderId], references: [id], onDelete: Cascade)
   orderItem   OrderItem?       @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+  package     Package?         @relation(fields: [packageId], references: [id], onDelete: Cascade)
   author      User             @relation(fields: [authorId], references: [id])
   attachments NoteAttachment[]
 }

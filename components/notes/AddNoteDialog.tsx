@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState } from "react"
-import { LuMessageSquarePlus, LuImage, LuMic, LuMicOff, LuX } from "react-icons/lu"
+import { LuMessageSquarePlus, LuImage, LuMic, LuMicOff, LuX, LuMessageCircle } from "react-icons/lu"
 import { createNote } from "@/actions/notes/createNote"
 import { addNoteAttachment } from "@/actions/notes/addNoteAttachment"
 
@@ -116,8 +116,8 @@ const AddNoteDialog = ({ orderId, orderItemId, packageId }: Props) => {
 
   return (
     <>
-      <button className="btn btn-outline btn-sm" onClick={handleOpen}>
-        <LuMessageSquarePlus className="size-5" />
+      <button className="btn btn-outline btn-secondary" onClick={handleOpen}>
+        <LuMessageCircle className="size-6" />
         Add Note
       </button>
 

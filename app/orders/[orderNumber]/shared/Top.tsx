@@ -6,9 +6,20 @@ import { useRouter } from "next/navigation"
 import { LuArrowLeft } from "react-icons/lu"
 import { TbCalendarTime, TbUser, TbWorldPin } from "react-icons/tb"
 import AddNoteDialog from "@/components/notes/AddNoteDialog"
+import { WorkflowStatus } from "@/prisma/generated/enums"
 
 type ShippingAddress = {
   state?: string
+}
+
+const statusBadge: Record<WorkflowStatus, string> = {
+  PENDING: "badge-warning",
+  PICKING: "badge-info",
+  PACKING: "badge-primary",
+  QA: "badge-secondary",
+  COMPLETED: "badge-success",
+  ON_HOLD: "badge-warning",
+  CANCELLED: "badge-error",
 }
 
 const Top = () => {
@@ -19,12 +30,12 @@ const Top = () => {
 
   return (
     <div className="flex justify-between">
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-4">
 
         <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-4">
+          <div className="flex gap-4 items-center">
             <div className="text-4xl text-base-content font-semibold">{`Order #${order?.orderNumber}`}</div>
-            {order?.id && <AddNoteDialog orderId={order.id} />}
+            {order?.id && <AddNoteDialog />}
           </div>
 
           <div className="flex gap-4">
@@ -53,7 +64,7 @@ const Top = () => {
 
           </div>
         </div>
-        <div>
+        <div className="flex items-center justify-between ">
           <button className="btn btn-lg btn-outline" onClick={() => router.back()}>
             <LuArrowLeft className="size-8" />
             Back
@@ -62,7 +73,14 @@ const Top = () => {
 
       </div>
 
-      {order?.workflowStatus}
+      <div className="flex flex-col gap-2">
+        {order?.workflowStatus && (
+          <div className={`badge ${statusBadge[order.workflowStatus]} badge-xl py-6 text-lg font-bold px-6 `}>
+            {order.workflowStatus}
+          </div>
+        )}
+
+      </div>
     </div>
   )
 }

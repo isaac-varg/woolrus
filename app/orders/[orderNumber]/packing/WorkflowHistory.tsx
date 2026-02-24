@@ -14,35 +14,27 @@ const WorkflowHistory = () => {
 
 
   return (
-    <>
-      <hr className="-mx-12 border-base-300" />
-
-      <div className="flex items-center gap-3">
-        <span className="text-base-content/60 text-lg">{t('pickedBy')}</span>
-        {pickers?.map(picker => (
-          <div key={picker.id} className="flex items-center gap-2">
-            {picker.image ? (
-              <Image
-                src={picker.image}
-                alt={picker.name ?? ''}
-                width={32}
-                height={32}
-                className="rounded-full"
-              />
-            ) : (
-              <div className="size-8 rounded-full bg-base-300 flex items-center justify-center">
-                <TbUser className="size-5 text-base-content/60" />
-              </div>
-            )}
-            <span className="font-semibold text-base-content">{picker.name}</span>
-          </div>
-        ))}
-      </div>
-
-
-      <hr className="-mx-12 border-base-300" />
-
-    </>
+    <div className="flex items-center gap-3">
+      <span className="text-base-content/60 text-lg">{t('pickedBy')}</span>
+      {pickers?.map(picker => (
+        <div key={picker.id} className="flex items-center gap-2">
+          {picker.image ? (
+            <Image
+              src={picker.image}
+              alt={picker.name ?? ''}
+              width={32}
+              height={32}
+              className="rounded-full"
+            />
+          ) : (
+            <div className="size-8 rounded-full bg-base-300 flex items-center justify-center">
+              <TbUser className="size-5 text-base-content/60" />
+            </div>
+          )}
+          <span className="font-semibold text-base-content">{picker.name}</span>
+        </div>
+      ))}
+    </div>
   )
 }
 

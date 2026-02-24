@@ -33,7 +33,7 @@ export default async function RootLayout({
 
   const session = await auth();
   const isAuthenticated = !!session?.user;
-  const user = await getUserByEmail(session?.user?.email || '')
+  const user = isAuthenticated ? await getUserByEmail(session?.user?.email || '').catch(() => null) : null;
   const preferences = getUserPreferences(user);
   const locale = await getLocale();
   const messages = await getMessages();

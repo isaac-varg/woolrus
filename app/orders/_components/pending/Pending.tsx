@@ -7,13 +7,6 @@ const OrdersPending = async () => {
   const orders = await getOrders("PENDING")
   const t = await getTranslations('orders')
 
-  if (orders.length === 0) {
-    return (
-      <div className="flex items-center justify-center py-16 text-base-content/50">
-        {t('noPending')}
-      </div>
-    )
-  }
 
   return (
     <div className="flex flex-col gap-6 py-8 px-12">
@@ -30,10 +23,19 @@ const OrdersPending = async () => {
           />
         </div>
 
+        {orders.length === 0 && (
+          <div className="flex items-center justify-center py-16 text-base-content/50">
+            {t('noPending')}
+          </div>
+
+        )}
+
         {/*  <div className="border-b border-primary" />*/}
       </div>
 
-      <Table orders={orders} />
+      {orders.length !== 0 && (
+        <Table orders={orders} />
+      )}
     </div>
   )
 }

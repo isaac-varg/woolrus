@@ -3,6 +3,7 @@ import { LuCircle, LuCircleCheckBig } from "react-icons/lu"
 import { TbUser } from "react-icons/tb"
 import { Order } from "@/actions/orders/getOrder"
 import Image from "next/image"
+import AddNoteDialog from "@/components/notes/AddNoteDialog"
 
 type Props = {
   item: Order['items'][number]
@@ -71,6 +72,10 @@ const QAItemCard = ({ item, completed, onToggle }: Props) => {
             <span className="text-sm font-semibold text-base-content">{item.pickedBy.name}</span>
           </div>
         )}
+
+        <div onClick={e => e.stopPropagation()}>
+          <AddNoteDialog orderItemId={item.id} />
+        </div>
       </div>
 
       {onToggle && (

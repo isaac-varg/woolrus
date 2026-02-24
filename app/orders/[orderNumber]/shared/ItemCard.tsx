@@ -2,6 +2,7 @@ import { FaTimes } from "react-icons/fa";
 import { LuCircle, LuCircleCheckBig } from "react-icons/lu";
 import { Order } from "@/actions/orders/getOrder"
 import Image from "next/image"
+import AddNoteDialog from "@/components/notes/AddNoteDialog"
 
 type Props = {
   item: Order['items'][number];
@@ -56,6 +57,10 @@ const ItemCard = ({ item, completed, onToggle }: Props) => {
             ${(item.price * item.quantity).toFixed(2)}
           </div>
           */}
+        </div>
+
+        <div onClick={e => e.stopPropagation()}>
+          <AddNoteDialog orderItemId={item.id} />
         </div>
       </div>
 

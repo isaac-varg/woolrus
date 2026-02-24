@@ -4,6 +4,7 @@ import { updateItemQAStatus } from "@/actions/orders/updateItemQAStatus"
 import { Order } from "@/actions/orders/getOrder"
 import { LuPackage, LuRuler, LuWeight } from "react-icons/lu"
 import QAItemCard from "./QAItemCard"
+import AddNoteDialog from "@/components/notes/AddNoteDialog"
 
 const PackageDetails = () => {
   const { order } = useOrder()
@@ -28,11 +29,12 @@ const PackageDetails = () => {
   return (
     <div className="flex flex-col gap-6">
 
-      <div>
+      <div className="flex justify-between items-center">
         <button onClick={() => {
           setView('display');
           clearSelectedPackage();
         }} className="btn btn-xl btn-secondary">Back to All Packages</button>
+        {selectedPackageId && <AddNoteDialog packageId={selectedPackageId} />}
       </div>
 
       <div className="grid grid-cols-2 gap-6">

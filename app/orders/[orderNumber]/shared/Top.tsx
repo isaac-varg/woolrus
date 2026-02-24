@@ -5,6 +5,7 @@ import { formatDate } from "@/utils/date/formatDate"
 import { useRouter } from "next/navigation"
 import { LuArrowLeft } from "react-icons/lu"
 import { TbCalendarTime, TbUser, TbWorldPin } from "react-icons/tb"
+import AddNoteDialog from "@/components/notes/AddNoteDialog"
 
 type ShippingAddress = {
   state?: string
@@ -27,7 +28,10 @@ const Top = () => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <div className="text-4xl text-base-content font-semibold">{`Order #${order?.orderNumber}`}</div>
+          <div className="flex items-center gap-4">
+            <div className="text-4xl text-base-content font-semibold">{`Order #${order?.orderNumber}`}</div>
+            {order?.id && <AddNoteDialog orderId={order.id} />}
+          </div>
 
           <div className="flex gap-4">
 

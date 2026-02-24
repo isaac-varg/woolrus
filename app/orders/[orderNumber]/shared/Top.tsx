@@ -3,7 +3,7 @@
 import { useOrder } from "@/store/orderSlice"
 import { formatDate } from "@/utils/date/formatDate"
 import { useRouter } from "next/navigation"
-import { LuArrowLeft } from "react-icons/lu"
+import { LuArrowLeft, LuPanelRight } from "react-icons/lu"
 import { TbCalendarTime, TbUser, TbWorldPin } from "react-icons/tb"
 import AddNoteDialog from "@/components/notes/AddNoteDialog"
 import { WorkflowStatus } from "@/prisma/generated/enums"
@@ -22,7 +22,11 @@ const statusBadge: Record<WorkflowStatus, string> = {
   CANCELLED: "badge-error",
 }
 
-const Top = () => {
+type Props = {
+  onToggleDrawer?: () => void
+}
+
+const Top = ({ onToggleDrawer }: Props) => {
   const { order } = useOrder()
   const router = useRouter()
 
@@ -73,13 +77,17 @@ const Top = () => {
 
       </div>
 
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 items-end">
         {order?.workflowStatus && (
           <div className={`badge ${statusBadge[order.workflowStatus]} badge-xl py-6 text-lg font-bold px-6 `}>
             {order.workflowStatus}
           </div>
         )}
-
+        {onToggleDrawer && (
+          <button className="btn btn-outline btn-secondary" onClick={onToggleDrawer}>
+            <LuPanelRight className="size-5" />
+          </button>
+        )}
       </div>
     </div>
   )

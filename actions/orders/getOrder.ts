@@ -13,6 +13,12 @@ export const getOrder = async (orderId: string) => {
         include: {
           pickedBy: {
             select: { id: true, name: true, image: true }
+          },
+          notes: {
+            include: {
+              author: { select: { id: true, name: true, image: true } }
+            },
+            orderBy: { createdAt: 'desc' },
           }
         }
       },
@@ -29,6 +35,12 @@ export const getOrder = async (orderId: string) => {
       packages: {
         include: { box: true },
         orderBy: { createdAt: 'asc' },
+      },
+      notes: {
+        include: {
+          author: { select: { id: true, name: true, image: true } }
+        },
+        orderBy: { createdAt: 'desc' },
       }
     }
   });

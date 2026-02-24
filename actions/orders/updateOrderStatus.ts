@@ -19,6 +19,9 @@ export const updateOrderStatus = async (orderId: string, status: WorkflowStatus)
         include: {
           packedBy: {
             select: { id: true, name: true, image: true }
+          },
+          qaBy: {
+            select: { id: true, name: true, image: true }
           }
         }
       },

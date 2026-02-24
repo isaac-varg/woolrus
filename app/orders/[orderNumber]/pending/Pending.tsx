@@ -1,7 +1,6 @@
 'use client'
 import { useOrder, useOrderActions } from "@/store/orderSlice"
 import Top from "../shared/Top"
-import { TbUser, TbWorldPin } from "react-icons/tb"
 import { useTranslations } from "next-intl"
 import { updateOrderStatus } from "@/actions/orders/updateOrderStatus"
 import { WorkflowStatus } from "@/prisma/generated/enums"

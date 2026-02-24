@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "sync:pull": "npx tsx scripts/syncPull.ts",
+    "sync:reset": "npx tsx scripts/syncReset.ts",
     "prisma:migrate": "pnpm exec prisma migrate dev",
     "prisma:generate": "pnpm exec prisma generate"
   },

@@ -6,7 +6,9 @@ import { useRouter } from "next/navigation"
 import { LuArrowLeft, LuPanelRight } from "react-icons/lu"
 import { TbCalendarTime, TbUser, TbWorldPin } from "react-icons/tb"
 import AddNoteDialog from "@/components/notes/AddNoteDialog"
+import NoteIndicator from "@/components/notes/NoteIndicator"
 import { WorkflowStatus } from "@/prisma/generated/enums"
+import { useDrawerActions } from "@/store/drawerSlice"
 
 type ShippingAddress = {
   state?: string
@@ -22,13 +24,10 @@ const statusBadge: Record<WorkflowStatus, string> = {
   CANCELLED: "badge-error",
 }
 
-type Props = {
-  onToggleDrawer?: () => void
-}
-
-const Top = ({ onToggleDrawer }: Props) => {
+const Top = () => {
   const { order } = useOrder()
   const router = useRouter()
+  const { toggle } = useDrawerActions()
 
   const shipping = order?.shippingAddress as ShippingAddress | null
 
@@ -40,6 +39,7 @@ const Top = ({ onToggleDrawer }: Props) => {
           <div className="flex gap-4 items-center">
             <div className="text-4xl text-base-content font-semibold">{`Order #${order?.orderNumber}`}</div>
             {order?.id && <AddNoteDialog orderId={order.id} />}
+            <NoteIndicator count={order?.notes?.length ?? 0} />
           </div>
 
           <div className="flex gap-4">
@@ -83,11 +83,9 @@ const Top = ({ onToggleDrawer }: Props) => {
             {order.workflowStatus}
           </div>
         )}
-        {onToggleDrawer && (
-          <button className="btn btn-outline btn-secondary" onClick={onToggleDrawer}>
-            <LuPanelRight className="size-5" />
-          </button>
-        )}
+        <button className="btn btn-outline btn-secondary" onClick={toggle}>
+          <LuPanelRight className="size-5" />
+        </button>
       </div>
     </div>
   )

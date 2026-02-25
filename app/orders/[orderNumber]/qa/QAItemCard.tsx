@@ -4,6 +4,7 @@ import { TbUser } from "react-icons/tb"
 import { Order } from "@/actions/orders/getOrder"
 import Image from "next/image"
 import AddNoteDialog from "@/components/notes/AddNoteDialog"
+import NoteIndicator from "@/components/notes/NoteIndicator"
 
 type Props = {
   item: Order['items'][number]
@@ -73,8 +74,9 @@ const QAItemCard = ({ item, completed, onToggle }: Props) => {
           </div>
         )}
 
-        <div onClick={e => e.stopPropagation()}>
+        <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
           <AddNoteDialog orderItemId={item.id} />
+          <NoteIndicator count={item.notes?.length ?? 0} />
         </div>
       </div>
 

@@ -1,26 +1,16 @@
 'use client'
 
-import { forwardRef, useImperativeHandle, useId, useState, type ReactNode } from "react"
-
-export type DrawerHandle = {
-  open: () => void
-  close: () => void
-  toggle: () => void
-}
+import { useId, type ReactNode } from "react"
+import { useDrawer, useDrawerActions } from "@/store/drawerSlice"
 
 type Props = {
   children: ReactNode
 }
 
-const Drawer = forwardRef<DrawerHandle, Props>(({ children }, ref) => {
+const Drawer = ({ children }: Props) => {
   const id = useId()
-  const [isOpen, setIsOpen] = useState(false)
-
-  useImperativeHandle(ref, () => ({
-    open: () => setIsOpen(true),
-    close: () => setIsOpen(false),
-    toggle: () => setIsOpen(prev => !prev),
-  }))
+  const isOpen = useDrawer((state) => state.isOpen)
+  const { close } = useDrawerActions()
 
   return (
     <div className="drawer drawer-end">
@@ -29,7 +19,7 @@ const Drawer = forwardRef<DrawerHandle, Props>(({ children }, ref) => {
         type="checkbox"
         className="drawer-toggle"
         checked={isOpen}
-        onChange={(e) => setIsOpen(e.target.checked)}
+        onChange={() => close()}
       />
       <div className="drawer-side z-50">
         <label htmlFor={id} className="drawer-overlay" />
@@ -39,8 +29,6 @@ const Drawer = forwardRef<DrawerHandle, Props>(({ children }, ref) => {
       </div>
     </div>
   )
-})
-
-Drawer.displayName = "Drawer"
+}
 
 export default Drawer

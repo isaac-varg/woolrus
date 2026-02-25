@@ -1,6 +1,7 @@
 import { Order } from "@/actions/orders/getOrder"
 import { useQAActions } from "@/store/qaSlice"
 import { LuPackage, LuRuler, LuWeight } from "react-icons/lu"
+import NoteIndicator from "@/components/notes/NoteIndicator"
 
 type Package = Order['packages'][number]
 
@@ -27,6 +28,7 @@ const PackageCard = ({ pkg, items }: Props) => {
             <LuPackage className="size-6 text-primary" />
             <span className="font-bold text-2xl text-base-content">{box.name}</span>
           </div>
+          <NoteIndicator count={pkg.notes?.length ?? 0} />
         </div>
 
         <div className="flex items-center gap-4 text-lg text-base-content/60">

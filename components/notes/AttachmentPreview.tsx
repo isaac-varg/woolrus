@@ -8,9 +8,11 @@ interface AttachmentPreviewProps {
   url: string
   mediaType: NoteMediaType
   fileName: string | null
+  thumbnail?: boolean
+  onClick?: () => void
 }
 
-export default function AttachmentPreview({ url, mediaType, fileName }: AttachmentPreviewProps) {
+export default function AttachmentPreview({ url, mediaType, fileName, thumbnail, onClick }: AttachmentPreviewProps) {
   const [error, setError] = useState(false)
 
   if (error) {
@@ -29,7 +31,12 @@ export default function AttachmentPreview({ url, mediaType, fileName }: Attachme
         src={url}
         alt={fileName ?? "Attachment"}
         loading="lazy"
-        className="max-h-64 rounded-lg border border-base-300 object-contain"
+        className={
+          thumbnail
+            ? "size-16 rounded-lg border border-base-300 object-cover cursor-pointer"
+            : "max-h-64 rounded-lg border border-base-300 object-contain"
+        }
+        onClick={onClick}
         onError={() => setError(true)}
       />
     )

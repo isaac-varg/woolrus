@@ -2,33 +2,13 @@
 
 import prisma from "@/lib/prisma"
 import { WorkflowStatus } from "@/prisma/generated/enums"
+import { getOrder } from "./getOrder"
 
 export const updateOrderStatus = async (orderId: string, status: WorkflowStatus) => {
-  return await prisma.order.update({
+  await prisma.order.update({
     where: { id: orderId },
     data: { workflowStatus: status },
-    include: {
-      items: {
-        include: {
-          pickedBy: {
-            select: { id: true, name: true, image: true }
-          }
-        }
-      },
-      workflow: {
-        include: {
-          packedBy: {
-            select: { id: true, name: true, image: true }
-          },
-          qaBy: {
-            select: { id: true, name: true, image: true }
-          }
-        }
-      },
-      packages: {
-        include: { box: true },
-        orderBy: { createdAt: 'asc' },
-      }
-    },
   })
+
+  return await getOrder(orderId)
 }

@@ -2,6 +2,7 @@ import { useOrder } from "@/store/orderSlice"
 import { formatDate } from "@/utils/date/formatDate"
 import { TbClipboardList, TbUser, TbNotes } from "react-icons/tb"
 import Image from "next/image"
+import NoteAttachments from "@/components/notes/NoteAttachments"
 
 type ShippingAddress = {
   firstName?: string
@@ -156,6 +157,7 @@ const PackingDrawerContent = () => {
                     <span className="text-xs text-base-content/50">{formatDate(note.createdAt)}</span>
                   </div>
                   {note.content && <span className="text-sm text-base-content">{note.content}</span>}
+                  <NoteAttachments attachments={note.attachments} thumbnail />
                 </div>
               ))}
             </div>
@@ -188,6 +190,7 @@ const PackingDrawerContent = () => {
                         <span className="text-xs text-base-content/50">{formatDate(note.createdAt)}</span>
                       </div>
                       {note.content && <span className="text-sm text-base-content">{note.content}</span>}
+                      <NoteAttachments attachments={note.attachments} thumbnail />
                     </div>
                   ))}
                 </div>

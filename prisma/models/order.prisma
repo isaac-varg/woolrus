@@ -18,4 +18,6 @@ model Order {
   workflow        OrderWorkflow?
   packages        Package[]
   notes           Note[]
+  shippingRates   ShippingRate[]
+  shippingLabels  ShippingLabel[]
 }

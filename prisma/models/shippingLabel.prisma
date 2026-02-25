@@ -1,0 +1,25 @@
+model ShippingLabel {
+  id               String    @id @default(uuid())
+  orderId          String
+  packageId        String    @unique
+  labelId          String    @unique // ShipStation label_id
+  shipmentId       String?
+  trackingNumber   String?
+  carrierCode      String
+  serviceCode      String
+  shippingCost     Float
+  currency         String    @default("usd")
+  labelFormat      String    @default("pdf")
+  labelDownloadPdf String?
+  labelDownloadPng String?
+  status           String    @default("active") // active | voided
+  voidedAt         DateTime?
+  shipDate         DateTime?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  package Package @relation(fields: [packageId], references: [id], onDelete: Cascade)
+
+  @@index([orderId])
+}

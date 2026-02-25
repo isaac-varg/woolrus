@@ -3,6 +3,7 @@ import Top from "../shared/Top"
 import WorkflowHistory from "./WorkflowHistory"
 import PackageManager from "./PackageManager"
 import UnverifiedItemsWarning from "./UnverifiedItemsWarning"
+import RatesLoadingState from "./RatesLoadingState"
 import CompleteQAButton from "./CompleteQAButton"
 import Drawer from "@/components/ui/Drawer"
 import QADrawerContent from "./QADrawerContent"
@@ -14,6 +15,8 @@ const QA = () => {
       <Top />
 
       <UnverifiedItemsWarning />
+
+      <RatesLoadingState />
 
       <CompleteQAButton />
 

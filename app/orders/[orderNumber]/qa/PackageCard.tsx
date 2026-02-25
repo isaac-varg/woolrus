@@ -1,6 +1,6 @@
 import { Order } from "@/actions/orders/getOrder"
 import { useQAActions } from "@/store/qaSlice"
-import { LuPackage, LuRuler, LuWeight } from "react-icons/lu"
+import { LuPackage, LuRuler, LuWeight, LuTruck } from "react-icons/lu"
 import NoteIndicator from "@/components/notes/NoteIndicator"
 
 type Package = Order['packages'][number]
@@ -15,6 +15,7 @@ const PackageCard = ({ pkg, items }: Props) => {
   const dimensions = `${box.length} × ${box.width} × ${box.height}`
   const { openPackageDetails } = useQAActions()
   const allVerified = items.length > 0 && items.every(i => i.isQAVerified)
+  const selectedRate = pkg.shippingRates?.find(r => r.isSelected)
 
   return (
     <div
@@ -53,6 +54,14 @@ const PackageCard = ({ pkg, items }: Props) => {
                 <span className="text-base-content/60">×{item.quantity}</span>
               </div>
             ))}
+          </div>
+        )}
+
+        {selectedRate && (
+          <div className="flex items-center gap-2 mt-2 pt-2 border-t border-base-300">
+            <LuTruck className="size-5 text-primary" />
+            <span className="text-base text-base-content/70">{selectedRate.carrierName}</span>
+            <span className="ml-auto font-semibold text-base-content">${selectedRate.shippingAmount.toFixed(2)}</span>
           </div>
         )}
 

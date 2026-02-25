@@ -45,7 +45,9 @@ export const getOrder = async (orderId: string) => {
               attachments: true,
             },
             orderBy: { createdAt: 'desc' },
-          }
+          },
+          shippingRates: { orderBy: { shippingAmount: 'asc' } },
+          shippingLabel: true,
         },
         orderBy: { createdAt: 'asc' },
       },

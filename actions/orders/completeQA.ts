@@ -5,12 +5,16 @@ import { auth } from "@/auth"
 import { WorkflowStatus } from "@/prisma/generated/enums"
 import { getOrder } from "./getOrder"
 import { getUserByEmail } from "@/actions/user/getUserByEmail"
+import { purchaseLabelsForOrder } from "@/actions/shipping/purchaseLabels"
 
 export const completeQA = async (orderId: string) => {
   const session = await auth()
   const email = session?.user?.email
 
   const qaById = email ? (await getUserByEmail(email)).id : null
+
+  // Purchase labels MUST succeed before completing QA
+  await purchaseLabelsForOrder(orderId)
 
   await prisma.orderWorkflow.upsert({
     where: { orderId },

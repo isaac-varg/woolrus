@@ -7,6 +7,8 @@ model Package {
   updatedAt DateTime    @updatedAt
   order     Order       @relation(fields: [orderId], references: [id], onDelete: Cascade)
   box       Box         @relation(fields: [boxId], references: [id], onDelete: Restrict)
-  items     OrderItem[]
-  notes     Note[]
+  items         OrderItem[]
+  notes         Note[]
+  shippingRates ShippingRate[]
+  shippingLabel ShippingLabel?
 }

@@ -1,6 +1,6 @@
 import { useOrder } from "@/store/orderSlice"
 import { formatDate } from "@/utils/date/formatDate"
-import { TbClipboardList, TbUser, TbNotes, TbBox } from "react-icons/tb"
+import { TbClipboardList, TbUser, TbNotes, TbBox, TbTruck } from "react-icons/tb"
 import Image from "next/image"
 import NoteAttachments from "@/components/notes/NoteAttachments"
 
@@ -169,6 +169,49 @@ const QADrawerContent = () => {
               <span className="text-sm text-base-content">—</span>
             )}
           </div>
+        </div>
+      </div>
+
+      <div className="divider my-0" />
+
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center gap-2 text-base-content/60">
+          <TbTruck className="size-5" />
+          <span className="font-semibold text-sm uppercase tracking-wide">Shipping</span>
+        </div>
+        <div className="flex flex-col gap-3 pl-7">
+          {order?.packages && order.packages.some(pkg => pkg.shippingRates?.some(r => r.isSelected)) ? (
+            <>
+              {order.packages.map((pkg, index) => {
+                const selected = pkg.shippingRates?.find(r => r.isSelected)
+                if (!selected) return null
+                return (
+                  <div key={pkg.id} className="flex flex-col">
+                    <span className="text-xs text-base-content/50">Package {index + 1} — {pkg.box.name}</span>
+                    <span className="text-sm font-medium text-base-content">
+                      {selected.carrierName} — {selected.serviceType}
+                    </span>
+                    <span className="text-sm text-base-content/70">
+                      ${selected.shippingAmount.toFixed(2)}
+                    </span>
+                  </div>
+                )
+              })}
+              <div className="flex flex-col">
+                <span className="text-xs text-base-content/50">Total Shipping</span>
+                <span className="text-sm font-bold text-base-content">
+                  ${order.packages
+                    .reduce((sum, pkg) => {
+                      const selected = pkg.shippingRates?.find(r => r.isSelected)
+                      return sum + (selected?.shippingAmount ?? 0)
+                    }, 0)
+                    .toFixed(2)}
+                </span>
+              </div>
+            </>
+          ) : (
+            <span className="text-sm text-base-content/50">No rates selected</span>
+          )}
         </div>
       </div>
 

@@ -5,6 +5,7 @@ import { Order } from "@/actions/orders/getOrder"
 import { LuPackage, LuRuler, LuWeight } from "react-icons/lu"
 import QAItemCard from "./QAItemCard"
 import AddNoteDialog from "@/components/notes/AddNoteDialog"
+import ShippingRateSelector from "./ShippingRateSelector"
 
 const PackageDetails = () => {
   const { order } = useOrder()
@@ -73,6 +74,8 @@ const PackageDetails = () => {
           </div>
         </div>
       </div>
+
+      <ShippingRateSelector packageId={pkg.id} rates={pkg.shippingRates} />
 
       <div className="flex flex-col gap-3">
         <div className="font-bold text-2xl text-base-content">

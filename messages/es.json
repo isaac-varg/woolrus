@@ -5,7 +5,21 @@
     "packing": "Empacando",
     "quality": "Calidad",
     "collapse": "Colapsar barra lateral",
-    "lastSync": "Última sincronización: hace 2 minutos"
+    "lastSync": "Última sincronización: hace 2 minutos",
+    "settings": "Configuración"
+  },
+  "settings": {
+    "title": "Configuración",
+    "tabs": {
+      "user": "Usuario",
+      "shipping": "Envío"
+    },
+    "user": {
+      "language": "Idioma",
+      "english": "Inglés",
+      "spanish": "Español",
+      "logout": "Cerrar Sesión"
+    }
   },
   "login": {
     "title": "Woolrus",

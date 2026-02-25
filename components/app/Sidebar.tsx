@@ -3,10 +3,11 @@
 import Image from "next/image";
 import { useEffect } from "react";
 import { useApp, useAppActions } from "@/store/appSlice";
-import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarLeftExpand } from "react-icons/tb";
+import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarLeftExpand, TbSettings } from "react-icons/tb";
 import { links } from "@/lib/sidebar/links";
 import SidebarButton from "./SidebarButton";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 export default function Sidebar({
   initialCollapsed,
@@ -16,6 +17,7 @@ export default function Sidebar({
   const { isSidebarCollapsed } = useApp()
   const { toggleSidebar, setSidebarCollapsed } = useAppActions();
   const t = useTranslations();
+  const router = useRouter();
 
   useEffect(() => {
     setSidebarCollapsed(initialCollapsed);
@@ -59,8 +61,15 @@ export default function Sidebar({
 
 
 
-      {/* Bottom Stuff - Sync + collapse */}
+      {/* Bottom Stuff - Settings + Sync + collapse */}
       <div className="flex flex-col gap-2 py-4">
+        <button
+          onClick={() => router.push('/settings')}
+          className={`btn btn-outline w-full transition-all duration-300 flex ${isSidebarCollapsed ? 'justify-center' : 'justify-start'}`}
+        >
+          <TbSettings className="size-6" />
+          {!isSidebarCollapsed && t('sidebar.settings')}
+        </button>
         {!isSidebarCollapsed && (
           <span className="text-xs text-base-content/50">
             {t('sidebar.lastSync')}

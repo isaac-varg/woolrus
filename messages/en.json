@@ -5,7 +5,21 @@
     "packing": "Packing",
     "quality": "Quality",
     "collapse": "Collapse Sidebar",
-    "lastSync": "Last Sync: 2 minutes ago"
+    "lastSync": "Last Sync: 2 minutes ago",
+    "settings": "Settings"
+  },
+  "settings": {
+    "title": "Settings",
+    "tabs": {
+      "user": "User",
+      "shipping": "Shipping"
+    },
+    "user": {
+      "language": "Language",
+      "english": "English",
+      "spanish": "Spanish",
+      "logout": "Log Out"
+    }
   },
   "login": {
     "title": "Woolrus",

@@ -33,7 +33,7 @@ const Drawer = forwardRef<DrawerHandle, Props>(({ children }, ref) => {
       />
       <div className="drawer-side z-50">
         <label htmlFor={id} className="drawer-overlay" />
-        <div className="bg-base-100 min-h-full w-80 p-4">
+        <div className="bg-base-100 min-h-full w-1/5 p-4">
           {children}
         </div>
       </div>

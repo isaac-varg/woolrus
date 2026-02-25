@@ -39,7 +39,7 @@ const Top = ({ onToggleDrawer }: Props) => {
         <div className="flex flex-col gap-2">
           <div className="flex gap-4 items-center">
             <div className="text-4xl text-base-content font-semibold">{`Order #${order?.orderNumber}`}</div>
-            {order?.id && <AddNoteDialog />}
+            {order?.id && <AddNoteDialog orderId={order.id} />}
           </div>
 
           <div className="flex gap-4">

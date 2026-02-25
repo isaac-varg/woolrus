@@ -4,6 +4,7 @@ import { useRef, useState } from "react"
 import { LuMessageSquarePlus, LuImage, LuMic, LuMicOff, LuX, LuMessageCircle } from "react-icons/lu"
 import { createNote } from "@/actions/notes/createNote"
 import { addNoteAttachment } from "@/actions/notes/addNoteAttachment"
+import { useRouter } from "next/navigation"
 
 type Props = {
   orderId?: string
@@ -12,6 +13,7 @@ type Props = {
 }
 
 const AddNoteDialog = ({ orderId, orderItemId, packageId }: Props) => {
+  const router = useRouter()
   const dialogRef = useRef<HTMLDialogElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
@@ -111,6 +113,8 @@ const AddNoteDialog = ({ orderId, orderItemId, packageId }: Props) => {
       handleClose()
     } catch {
       setIsSubmitting(false)
+    } finally {
+      router.refresh()
     }
   }
 

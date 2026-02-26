@@ -39,6 +39,7 @@ const OrderPage = async ({ searchParams }: Props) => {
   return (
     <>
       <State
+        key={order.id}
         order={order}
       />
       {content}

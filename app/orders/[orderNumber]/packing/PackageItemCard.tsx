@@ -9,7 +9,7 @@ type Props = {
 
 const PackageItemCard = ({ item, onClick }: Props) => {
 
-  const attributes = item.attributes as Record<string, string> | null
+  const attributes = item.attributes as { name: string; value: string }[] | null
 
   return (
     <div
@@ -36,9 +36,9 @@ const PackageItemCard = ({ item, onClick }: Props) => {
           <div className="text-lg text-base-content/60">SKU: {item.sku}</div>
         )}
 
-        {attributes && Object.entries(attributes).map(([key, value]) => (
-          <div key={key} className="text-2xl text-base-content/60">
-            {key}: <span className="text-base-content">{value}</span>
+        {attributes?.map(attr => (
+          <div key={attr.name} className="text-2xl text-base-content/60">
+            {attr.name}: <span className="text-base-content">{attr.value}</span>
           </div>
         ))}
 

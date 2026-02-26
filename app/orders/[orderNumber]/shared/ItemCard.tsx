@@ -16,7 +16,7 @@ type Props = {
 
 const ItemCard = ({ item, completed, onToggle }: Props) => {
   const t = useTranslations('orderDetail')
-  const attributes = item.attributes as Record<string, string> | null
+  const attributes = item.attributes as { name: string; value: string }[] | null
 
   return (
     <div
@@ -43,9 +43,9 @@ const ItemCard = ({ item, completed, onToggle }: Props) => {
           <div className="text-lg text-base-content/60">{t('sku', { sku: item.sku })}</div>
         )}
 
-        {attributes && Object.entries(attributes).map(([key, value]) => (
-          <div key={key} className="text-2xl text-base-content/60">
-            {key}: <span className="text-base-content">{value}</span>
+        {attributes?.map(attr => (
+          <div key={attr.name} className="text-2xl text-base-content/60">
+            {attr.name}: <span className="text-base-content">{attr.value}</span>
           </div>
         ))}
 

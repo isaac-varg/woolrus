@@ -19,6 +19,7 @@ const CompletePackingButton = () => {
     const updated = await completePacking(order.id)
     setOrder(updated)
     router.push('/orders?status=PACKING')
+    router.refresh()
   }
 
   return (

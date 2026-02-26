@@ -19,6 +19,8 @@ pnpm run prisma:generate
 ```
 - generates prisma client
 
-
+```bash
+pnpm run sync:reset
 ```
-```
+- deletes all data except boxes.
+- great way to reset data during development

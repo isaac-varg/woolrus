@@ -5,6 +5,7 @@ import { LuMessageSquarePlus, LuImage, LuMic, LuMicOff, LuX, LuMessageCircle } f
 import { createNote } from "@/actions/notes/createNote"
 import { addNoteAttachment } from "@/actions/notes/addNoteAttachment"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 type Props = {
   orderId?: string
@@ -14,6 +15,7 @@ type Props = {
 
 const AddNoteDialog = ({ orderId, orderItemId, packageId }: Props) => {
   const router = useRouter()
+  const t = useTranslations('notes')
   const dialogRef = useRef<HTMLDialogElement>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const mediaRecorderRef = useRef<MediaRecorder | null>(null)
@@ -122,16 +124,16 @@ const AddNoteDialog = ({ orderId, orderItemId, packageId }: Props) => {
     <>
       <button className="btn btn-outline btn-secondary" onClick={handleOpen}>
         <LuMessageCircle className="size-6" />
-        Add Note
+        {t('addNote')}
       </button>
 
       <dialog ref={dialogRef} className="modal">
         <div className="modal-box flex flex-col gap-4">
-          <h3 className="font-bold text-lg">Add Note</h3>
+          <h3 className="font-bold text-lg">{t('addNote')}</h3>
 
           <textarea
             className="textarea textarea-bordered w-full"
-            placeholder="Write a note..."
+            placeholder={t('placeholder')}
             rows={3}
             value={content}
             onChange={(e) => setContent(e.target.value)}
@@ -193,14 +195,14 @@ const AddNoteDialog = ({ orderId, orderItemId, packageId }: Props) => {
 
           <div className="modal-action">
             <button className="btn" onClick={handleClose} disabled={isSubmitting}>
-              Cancel
+              {t('cancel')}
             </button>
             <button
               className="btn btn-primary"
               onClick={handleSubmit}
               disabled={isSubmitting || (!content.trim() && images.length === 0 && !audioBlob)}
             >
-              {isSubmitting ? <span className="loading loading-spinner loading-sm" /> : "Submit"}
+              {isSubmitting ? <span className="loading loading-spinner loading-sm" /> : t('submit')}
             </button>
           </div>
         </div>

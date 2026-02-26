@@ -7,6 +7,7 @@ import { signOut } from 'next-auth/react'
 import { updatePreferences } from '@/actions/user/updatePreferences'
 import { useRouter } from 'next/navigation'
 import type { Locale } from '@/lib/preferences/types'
+import ShippingSettings from './ShippingSettings'
 
 const SettingsPage = () => {
   const t = useTranslations('settings')
@@ -67,11 +68,7 @@ const SettingsPage = () => {
         </div>
       )}
 
-      {activeTab === 'shipping' && (
-        <div>
-          <p>Hello World</p>
-        </div>
-      )}
+      {activeTab === 'shipping' && <ShippingSettings />}
     </div>
   )
 }

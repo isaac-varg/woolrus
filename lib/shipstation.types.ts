@@ -129,7 +129,7 @@ export interface Carrier {
   account_number: string
   requires_funded_amount: boolean
   balance: number
-  nickname: string
+  nickname: string | null
   friendly_name: string
   primary: boolean
   has_multi_package_supporting_services: boolean
@@ -141,6 +141,14 @@ export interface ApiError {
   error_type: string
   error_code: string
   message: string
+}
+
+export interface CarrierServiceInfo {
+  carrier_id: string
+  service_code: string
+  name: string
+  domestic: boolean
+  international: boolean
 }
 
 export interface ShipStationErrorBody {

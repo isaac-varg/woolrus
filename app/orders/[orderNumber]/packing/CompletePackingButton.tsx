@@ -1,11 +1,13 @@
 import { useOrder, useOrderActions } from "@/store/orderSlice"
 import { completePacking } from "@/actions/orders/completePacking"
 import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
 
 const CompletePackingButton = () => {
   const { order } = useOrder()
   const { setOrder } = useOrderActions()
   const router = useRouter()
+  const t = useTranslations('orderPacking')
 
   const allAssigned = order?.items.length && order.items.every(i => i.packageId)
   const allWeighed = order?.packages.length && order.packages.every(p => p.weight != null)
@@ -24,7 +26,7 @@ const CompletePackingButton = () => {
       className="btn btn-xl btn-success h-40 text-2xl w-full"
       onClick={handleComplete}
     >
-      Complete Packing
+      {t('completePacking')}
     </button>
   )
 }

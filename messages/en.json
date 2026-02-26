@@ -19,6 +19,15 @@
       "english": "English",
       "spanish": "Spanish",
       "logout": "Log Out"
+    },
+    "shipping": {
+      "title": "Shipping",
+      "description": "Manage which carriers and services are used when fetching rates.",
+      "syncButton": "Sync from ShipStation",
+      "noCarriers": "No carriers found. Sync from ShipStation to get started.",
+      "servicesEnabled": "{enabled} / {total} services enabled",
+      "domestic": "Domestic",
+      "international": "International"
     }
   },
   "login": {
@@ -44,6 +53,26 @@
       "priorityHigh": "High"
     }
   },
+  "orderDetail": {
+    "orderNumber": "Order #{orderNumber}",
+    "back": "Back",
+    "sku": "SKU: {sku}",
+    "status": {
+      "PENDING": "Pending",
+      "PICKING": "Picking",
+      "PACKING": "Packing",
+      "QA": "Quality",
+      "COMPLETED": "Completed",
+      "ON_HOLD": "On Hold",
+      "CANCELLED": "Cancelled"
+    }
+  },
+  "notes": {
+    "addNote": "Add Note",
+    "placeholder": "Write a note...",
+    "cancel": "Cancel",
+    "submit": "Submit"
+  },
   "orderPending": {
     "startButton": "Begin Picking"
   },
@@ -62,19 +91,46 @@
     "addPackage": "Add Package",
     "removePackage": "Remove Package",
     "package": "Package",
-    "unassignedItems": "Unassigned Items",
+    "packages": "Packages",
+    "unassignedItems": "Unassigned Items ({count})",
     "assignedItems": "Items in this Package",
     "completePacking": "Complete Packing",
     "allItemsMustBeAssigned": "All items must be assigned to a package before completing.",
-    "noPackagesYet": "No packages yet. Add a package to get started.",
+    "noPackagesYet": "No packages yet.",
     "boxDimensions": "{length}\" x {width}\" x {height}\"",
     "maxWeight": "Max {weight} lbs",
     "itemCount": "{count, plural, =0 {No items} one {# item} other {# items}}",
     "weight": "Weight",
     "weightPlaceholder": "Package weight",
     "lbs": "lbs",
+    "lbsMax": "{weight} lbs max",
     "addItem": "Add",
     "removeItem": "Remove",
-    "backToPackages": "All Packages"
+    "backToPackages": "Back to All Packages",
+    "cancel": "Cancel",
+    "max": "{weight} max",
+    "stepVerify": "Verify",
+    "stepPack": "Pack",
+    "packageWeight": "Package Weight",
+    "enterWeight": "Enter weight",
+    "packageItems": "Package Items ({count})",
+    "noItemsAssigned": "No items assigned yet.",
+    "allItemsAssigned": "All items have been assigned.",
+    "missingWeights": "{count, plural, one {# package does} other {# packages do}} not have a weight set.",
+    "unassignedWarning": "{count, plural, one {# item has} other {# items have}} not been assigned to a package.",
+    "drawerTitle": "Order Details",
+    "orderBasics": "Order Basics",
+    "created": "Created",
+    "customer": "Customer",
+    "shippingAddress": "Shipping Address",
+    "picking": "Picking",
+    "pickStarted": "Pick Started",
+    "pickCompleted": "Pick Completed",
+    "pickedByLabel": "Picked By",
+    "notesSection": "Notes",
+    "customerNote": "Customer Note",
+    "orderNotes": "Order Notes",
+    "itemNotes": "Item Notes",
+    "noNotes": "No notes"
   }
 }

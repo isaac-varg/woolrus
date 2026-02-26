@@ -1,0 +1,15 @@
+model CarrierService {
+  id            String          @id @default(uuid())
+  carrierId     String
+  serviceCode   String
+  name          String
+  domestic      Boolean         @default(false)
+  international Boolean         @default(false)
+  enabled       Boolean         @default(true)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  carrier ShippingCarrier @relation(fields: [carrierId], references: [id], onDelete: Cascade)
+
+  @@unique([carrierId, serviceCode])
+}

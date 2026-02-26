@@ -8,6 +8,7 @@ import { Order } from "@/actions/orders/getOrder"
 import { LuPackage, LuRuler, LuWeight } from "react-icons/lu"
 import PackageItemCard from "./PackageItemCard"
 import AddNoteDialog from "@/components/notes/AddNoteDialog"
+import { useTranslations } from "next-intl"
 
 const PackageDetails = () => {
   const { order } = useOrder()
@@ -19,6 +20,7 @@ const PackageDetails = () => {
   const packageItems = order?.items.filter(item => item.packageId === selectedPackageId) ?? []
   const unassignedItems = order?.items.filter(item => !item.packageId) ?? []
 
+  const t = useTranslations('orderPacking')
   const [weight, setWeight] = useState<string>(pkg?.weight?.toString() ?? '')
 
   const handleAssign = async (item: Order['items'][number]) => {
@@ -57,7 +59,7 @@ const PackageDetails = () => {
         <button onClick={() => {
           setView('display');
           clearSelectedPackage();
-        }} className="btn btn-xl btn-secondary">Back to All Packages</button>
+        }} className="btn btn-xl btn-secondary">{t('backToPackages')}</button>
         {selectedPackageId && <AddNoteDialog packageId={selectedPackageId} />}
       </div>
 
@@ -76,7 +78,7 @@ const PackageDetails = () => {
               {box.maxWeight != null && (
                 <div className="flex items-center gap-1">
                   <LuWeight className="size-5" />
-                  <span>{box.maxWeight} lbs max</span>
+                  <span>{t('lbsMax', { weight: box.maxWeight })}</span>
                 </div>
               )}
             </div>
@@ -87,7 +89,7 @@ const PackageDetails = () => {
           <div className="card-body gap-3 py-4">
             <div className="flex items-center gap-2">
               <LuWeight className="size-6 text-primary" />
-              <span className="font-bold text-2xl text-base-content">Package Weight</span>
+              <span className="font-bold text-2xl text-base-content">{t('packageWeight')}</span>
             </div>
             <div className="flex items-center gap-3">
               <input
@@ -97,10 +99,10 @@ const PackageDetails = () => {
                 value={weight}
                 onChange={(e) => setWeight(e.target.value)}
                 onBlur={handleWeightSave}
-                placeholder="Enter weight"
+                placeholder={t('enterWeight')}
                 className="input input-bordered input-lg w-full"
               />
-              <span className="text-lg text-base-content/60">lbs</span>
+              <span className="text-lg text-base-content/60">{t('lbs')}</span>
             </div>
           </div>
         </div>
@@ -109,10 +111,10 @@ const PackageDetails = () => {
       <div className="grid grid-cols-2 gap-6">
         <div className="flex flex-col gap-3">
           <div className="font-bold text-2xl text-base-content">
-            Package Items ({packageItems.length})
+            {t('packageItems', { count: packageItems.length })}
           </div>
           {packageItems.length === 0 && (
-            <div className="text-lg text-base-content/60">No items assigned yet.</div>
+            <div className="text-lg text-base-content/60">{t('noItemsAssigned')}</div>
           )}
           {packageItems.map(item => (
             <PackageItemCard key={item.id} item={item} onClick={handleRemove} />
@@ -121,10 +123,10 @@ const PackageDetails = () => {
 
         <div className="flex flex-col gap-3">
           <div className="font-bold text-2xl text-base-content">
-            Unassigned Items ({unassignedItems.length})
+            {t('unassignedItems', { count: unassignedItems.length })}
           </div>
           {unassignedItems.length === 0 && (
-            <div className="text-lg text-base-content/60">All items have been assigned.</div>
+            <div className="text-lg text-base-content/60">{t('allItemsAssigned')}</div>
           )}
           {unassignedItems.map(item => (
             <PackageItemCard key={item.id} item={item} onClick={handleAssign} />

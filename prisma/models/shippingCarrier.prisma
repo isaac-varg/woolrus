@@ -1,0 +1,13 @@
+model ShippingCarrier {
+  id           String           @id @default(uuid())
+  carrierId    String           @unique // ShipStation carrier_id
+  carrierCode  String
+  nickname     String
+  friendlyName String
+  primary      Boolean          @default(false)
+  enabled      Boolean          @default(true)
+  syncedAt     DateTime         @default(now())
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  services     CarrierService[]
+}

@@ -19,6 +19,15 @@
       "english": "Inglés",
       "spanish": "Español",
       "logout": "Cerrar Sesión"
+    },
+    "shipping": {
+      "title": "Envío",
+      "description": "Administra qué transportistas y servicios se usan al obtener tarifas.",
+      "syncButton": "Sincronizar desde ShipStation",
+      "noCarriers": "No se encontraron transportistas. Sincroniza desde ShipStation para comenzar.",
+      "servicesEnabled": "{enabled} / {total} servicios habilitados",
+      "domestic": "Nacional",
+      "international": "Internacional"
     }
   },
   "login": {
@@ -44,6 +53,26 @@
       "priorityHigh": "Alta"
     }
   },
+  "orderDetail": {
+    "orderNumber": "Orden #{orderNumber}",
+    "back": "Volver",
+    "sku": "SKU: {sku}",
+    "status": {
+      "PENDING": "Pendiente",
+      "PICKING": "Picking",
+      "PACKING": "Empacando",
+      "QA": "Calidad",
+      "COMPLETED": "Completado",
+      "ON_HOLD": "En Espera",
+      "CANCELLED": "Cancelado"
+    }
+  },
+  "notes": {
+    "addNote": "Agregar Nota",
+    "placeholder": "Escribe una nota...",
+    "cancel": "Cancelar",
+    "submit": "Enviar"
+  },
   "orderPending": {
     "startButton": "Comenzar Picking"
   },
@@ -62,19 +91,46 @@
     "addPackage": "Agregar Paquete",
     "removePackage": "Quitar Paquete",
     "package": "Paquete",
-    "unassignedItems": "Artículos sin asignar",
+    "packages": "Paquetes",
+    "unassignedItems": "Artículos sin asignar ({count})",
     "assignedItems": "Artículos en este paquete",
     "completePacking": "Completar Empaque",
     "allItemsMustBeAssigned": "Todos los artículos deben estar asignados a un paquete antes de completar.",
-    "noPackagesYet": "No hay paquetes aún. Agrega un paquete para comenzar.",
+    "noPackagesYet": "No hay paquetes aún.",
     "boxDimensions": "{length}\" x {width}\" x {height}\"",
     "maxWeight": "Máx {weight} lbs",
     "itemCount": "{count, plural, =0 {Sin artículos} one {# artículo} other {# artículos}}",
     "weight": "Peso",
     "weightPlaceholder": "Peso del paquete",
     "lbs": "lbs",
+    "lbsMax": "{weight} lbs máx",
     "addItem": "Agregar",
     "removeItem": "Quitar",
-    "backToPackages": "Todos los Paquetes"
+    "backToPackages": "Volver a Todos los Paquetes",
+    "cancel": "Cancelar",
+    "max": "{weight} máx",
+    "stepVerify": "Verificar",
+    "stepPack": "Empacar",
+    "packageWeight": "Peso del Paquete",
+    "enterWeight": "Ingrese peso",
+    "packageItems": "Artículos del Paquete ({count})",
+    "noItemsAssigned": "No hay artículos asignados aún.",
+    "allItemsAssigned": "Todos los artículos han sido asignados.",
+    "missingWeights": "{count, plural, one {# paquete no tiene} other {# paquetes no tienen}} un peso asignado.",
+    "unassignedWarning": "{count, plural, one {# artículo no ha} other {# artículos no han}} sido asignado a un paquete.",
+    "drawerTitle": "Detalles del Pedido",
+    "orderBasics": "Datos del Pedido",
+    "created": "Creado",
+    "customer": "Cliente",
+    "shippingAddress": "Dirección de Envío",
+    "picking": "Picking",
+    "pickStarted": "Picking Iniciado",
+    "pickCompleted": "Picking Completado",
+    "pickedByLabel": "Recogido Por",
+    "notesSection": "Notas",
+    "customerNote": "Nota del Cliente",
+    "orderNotes": "Notas del Pedido",
+    "itemNotes": "Notas de Artículos",
+    "noNotes": "Sin notas"
   }
 }

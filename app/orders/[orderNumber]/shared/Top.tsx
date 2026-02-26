@@ -9,6 +9,7 @@ import AddNoteDialog from "@/components/notes/AddNoteDialog"
 import NoteIndicator from "@/components/notes/NoteIndicator"
 import { WorkflowStatus } from "@/prisma/generated/enums"
 import { useDrawerActions } from "@/store/drawerSlice"
+import { useTranslations } from "next-intl"
 
 type ShippingAddress = {
   state?: string
@@ -28,6 +29,7 @@ const Top = () => {
   const { order } = useOrder()
   const router = useRouter()
   const { toggle } = useDrawerActions()
+  const t = useTranslations('orderDetail')
 
   const shipping = order?.shippingAddress as ShippingAddress | null
 
@@ -37,7 +39,7 @@ const Top = () => {
 
         <div className="flex flex-col gap-2">
           <div className="flex gap-4 items-center">
-            <div className="text-4xl text-base-content font-semibold">{`Order #${order?.orderNumber}`}</div>
+            <div className="text-4xl text-base-content font-semibold">{t('orderNumber', { orderNumber: order?.orderNumber ?? '' })}</div>
             {order?.id && <AddNoteDialog orderId={order.id} />}
             <NoteIndicator count={order?.notes?.length ?? 0} />
           </div>
@@ -71,7 +73,7 @@ const Top = () => {
         <div className="flex items-center justify-between ">
           <button className="btn btn-lg btn-outline" onClick={() => router.back()}>
             <LuArrowLeft className="size-8" />
-            Back
+            {t('back')}
           </button>
         </div>
 
@@ -80,7 +82,7 @@ const Top = () => {
       <div className="flex flex-col gap-2 items-end">
         {order?.workflowStatus && (
           <div className={`badge ${statusBadge[order.workflowStatus]} badge-xl py-6 text-lg font-bold px-6 `}>
-            {order.workflowStatus}
+            {t(`status.${order.workflowStatus}`)}
           </div>
         )}
         <button className="btn btn-outline btn-secondary" onClick={toggle}>

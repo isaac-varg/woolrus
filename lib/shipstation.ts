@@ -6,6 +6,7 @@ import type {
   LabelResponse,
   VoidLabelResponse,
   Carrier,
+  CarrierServiceInfo,
   ShipStationErrorBody,
 } from './shipstation.types'
 
@@ -161,4 +162,7 @@ export const shipstation = {
 
   getCarriers: () =>
     request<{ carriers: Carrier[] }>('/carriers'),
+
+  getCarrierServices: (carrierId: string) =>
+    request<{ services: CarrierServiceInfo[] }>(`/carriers/${carrierId}/services`),
 }

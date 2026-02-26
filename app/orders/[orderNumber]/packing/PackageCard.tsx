@@ -2,6 +2,7 @@ import { Order } from "@/actions/orders/getOrder"
 import { usePackageActions } from "@/store/packageSlice"
 import { LuBox, LuPackage, LuRuler, LuWeight } from "react-icons/lu"
 import NoteIndicator from "@/components/notes/NoteIndicator"
+import { useTranslations } from "next-intl"
 
 type Package = Order['packages'][number]
 
@@ -14,6 +15,7 @@ const PackageCard = ({ pkg, items }: Props) => {
   const { box } = pkg
   const dimensions = `${box.length} × ${box.width} × ${box.height}`
   const { openPackageDetails } = usePackageActions()
+  const t = useTranslations('orderPacking')
   console.log(items)
 
   return (
@@ -39,14 +41,14 @@ const PackageCard = ({ pkg, items }: Props) => {
           {pkg.weight != null && (
             <div className="flex items-center gap-1">
               <LuWeight className="size-5" />
-              <span>{pkg.weight} lbs</span>
+              <span>{pkg.weight} {t('lbs')}</span>
             </div>
           )}
         </div>
 
         {items.length > 0 && (
           <div className="flex flex-col gap-1 mt-1">
-            <div className="text-base text-base-content/60">{items.length} item{items.length !== 1 && 's'}</div>
+            <div className="text-base text-base-content/60">{t('itemCount', { count: items.length })}</div>
             {items.map(item => (
               <div key={item.id} className="flex items-center justify-between text-lg">
                 <span className="text-base-content">{item.name}</span>

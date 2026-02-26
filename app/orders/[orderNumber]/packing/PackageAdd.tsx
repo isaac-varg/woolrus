@@ -3,9 +3,10 @@ import { useData } from "@/store/dataSlice";
 import { useOrder, useOrderActions } from "@/store/orderSlice";
 import { usePackageActions } from "@/store/packageSlice";
 import { LuRuler, LuWeight } from "react-icons/lu";
+import { useTranslations } from "next-intl";
 
 const PackageAdd = () => {
-
+  const t = useTranslations('orderPacking')
   const { setView, clearSelectedPackage, openPackageDetails } = usePackageActions()
   const { setOrder } = useOrderActions()
   const { order } = useOrder()
@@ -25,7 +26,7 @@ const PackageAdd = () => {
         <button onClick={() => {
           setView('display');
           clearSelectedPackage();
-        }} className="btn btn-xl btn-secondary">Cancel</button>
+        }} className="btn btn-xl btn-secondary">{t('cancel')}</button>
       </div>
 
       <div className="grid grid-cols-3 gap-6">
@@ -45,10 +46,12 @@ const PackageAdd = () => {
                 {`${b.length} x ${b.width} x ${b.height}`}
               </div>
 
-              <div className="text-base-content/60 flex gap-2 items-center text-xl font-semibold">
-                <LuWeight className="size-6" />
-                {`${b.maxWeight} max`}
-              </div>
+              {b.maxWeight != null && (
+                <div className="text-base-content/60 flex gap-2 items-center text-xl font-semibold">
+                  <LuWeight className="size-6" />
+                  {t('max', { weight: b.maxWeight })}
+                </div>
+              )}
 
             </button>
           )

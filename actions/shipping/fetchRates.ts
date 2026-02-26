@@ -18,9 +18,18 @@ export const fetchRatesForOrder = async (orderId: string) => {
 
   if (order.packages.length === 0) return
 
-  const carriers = await shipstation.getCarriers()
-  const carrierIds = carriers.carriers.map(c => c.carrier_id)
+  const dbCarriers = await prisma.shippingCarrier.findMany({
+    where: { enabled: true },
+    include: { services: { where: { enabled: true } } },
+  })
+  const carrierIds = dbCarriers.map((c: { carrierId: string }) => c.carrierId)
   if (carrierIds.length === 0) return
+
+  const enabledServiceCodes = new Set(
+    dbCarriers.flatMap((c: { services: { serviceCode: string }[] }) =>
+      c.services.map((s: { serviceCode: string }) => s.serviceCode),
+    ),
+  )
 
   const shipFrom = getShipFromAddress()
   const shipTo = orderAddressToShipTo(
@@ -54,7 +63,8 @@ export const fetchRatesForOrder = async (orderId: string) => {
       },
     }
     const rateResponse = await shipstation.getRates(rateBody)
-    const rates = rateResponse.rate_response?.rates ?? []
+    const allRates = rateResponse.rate_response?.rates ?? []
+    const rates = allRates.filter(r => enabledServiceCodes.has(r.service_code))
 
     if (rates.length === 0) continue
 

@@ -1,9 +1,12 @@
+'use client'
+
 import { FaTimes } from "react-icons/fa";
 import { LuCircle, LuCircleCheckBig } from "react-icons/lu";
 import { Order } from "@/actions/orders/getOrder"
 import Image from "next/image"
 import AddNoteDialog from "@/components/notes/AddNoteDialog"
 import NoteIndicator from "@/components/notes/NoteIndicator"
+import { useTranslations } from "next-intl"
 
 type Props = {
   item: Order['items'][number];
@@ -12,7 +15,7 @@ type Props = {
 }
 
 const ItemCard = ({ item, completed, onToggle }: Props) => {
-
+  const t = useTranslations('orderDetail')
   const attributes = item.attributes as Record<string, string> | null
 
   return (
@@ -37,7 +40,7 @@ const ItemCard = ({ item, completed, onToggle }: Props) => {
         <div className="font-semibold text-2xl text-base-content">{item.name}</div>
 
         {item.sku && (
-          <div className="text-lg text-base-content/60">SKU: {item.sku}</div>
+          <div className="text-lg text-base-content/60">{t('sku', { sku: item.sku })}</div>
         )}
 
         {attributes && Object.entries(attributes).map(([key, value]) => (

@@ -11,9 +11,11 @@ import MissingWeightsWarning from "./MissingWeightsWarning"
 import CompletePackingButton from "./CompletePackingButton"
 import Drawer from "@/components/ui/Drawer"
 import PackingDrawerContent from "./PackingDrawerContent"
+import { useTranslations } from "next-intl"
 
 const Packing = () => {
   const [step, setStep] = useState(0)
+  const t = useTranslations('orderPacking')
 
   return (
     <div className="flex flex-col gap-6">
@@ -29,11 +31,11 @@ const Packing = () => {
         steps={[
           {
             icon: LuNotebookText,
-            label: "Verify"
+            label: t('stepVerify')
           },
           {
             icon: LuBox,
-            label: "Pack"
+            label: t('stepPack')
           }
         ]}
         currentStep={step}

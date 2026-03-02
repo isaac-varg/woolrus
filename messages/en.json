@@ -49,6 +49,10 @@
     "noReady": "No orders ready",
     "ship": "Ship",
     "shipping": "Shipping...",
+    "repack": "Repack",
+    "repacking": "Repacking...",
+    "repackConfirm": "This will void purchased labels and send the selected orders back to packing. Continue?",
+    "cancel": "Cancel",
     "shipErrors": "Some orders had errors",
     "selectedCount": "{count} selected",
     "table": {

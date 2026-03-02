@@ -1,7 +1,8 @@
 'use client'
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { OrderWithItems } from "@/actions/orders/getOrders"
 import { shipOrders } from "@/actions/shipping/shipOrders"
+import { repackOrders } from "@/actions/orders/repackOrder"
 import { formatDate } from "@/utils/date/formatDate"
 import { useTranslations } from "next-intl"
 import { useRouter } from "next/navigation"
@@ -12,6 +13,8 @@ const Table = ({ orders }: { orders: OrderWithItems[] }) => {
   const router = useRouter()
   const [selected, setSelected] = useState<Set<string>>(new Set())
   const [shipping, setShipping] = useState(false)
+  const [repacking, setRepacking] = useState(false)
+  const repackDialogRef = useRef<HTMLDialogElement>(null)
 
   const allSelected = selected.size === orders.length && orders.length > 0
 
@@ -63,12 +66,35 @@ const Table = ({ orders }: { orders: OrderWithItems[] }) => {
     }
   }
 
+  const confirmRepack = async () => {
+    repackDialogRef.current?.close()
+    const selectedIds = Array.from(selected)
+
+    setRepacking(true)
+    try {
+      const { results } = await repackOrders(selectedIds)
+
+      const errors = results.filter((r) => !r.success)
+      if (errors.length > 0) {
+        const messages = errors.map((e) => `#${e.orderNumber}: ${e.error}`)
+        alert(messages.join('\n'))
+      }
+
+      setSelected(new Set())
+      router.refresh()
+    } catch (err) {
+      alert(err instanceof Error ? err.message : String(err))
+    } finally {
+      setRepacking(false)
+    }
+  }
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center gap-4">
         <button
           className="btn btn-primary"
-          disabled={selected.size === 0 || shipping}
+          disabled={selected.size === 0 || shipping || repacking}
           onClick={handleShip}
         >
           {shipping ? (
@@ -78,6 +104,20 @@ const Table = ({ orders }: { orders: OrderWithItems[] }) => {
             </>
           ) : (
             t('ship')
+          )}
+        </button>
+        <button
+          className="btn btn-warning"
+          disabled={selected.size === 0 || shipping || repacking}
+          onClick={() => repackDialogRef.current?.showModal()}
+        >
+          {repacking ? (
+            <>
+              <span className="loading loading-spinner loading-sm" />
+              {t('repacking')}
+            </>
+          ) : (
+            t('repack')
           )}
         </button>
         {selected.size > 0 && (
@@ -142,6 +182,23 @@ const Table = ({ orders }: { orders: OrderWithItems[] }) => {
           </tbody>
         </table>
       </div>
+      <dialog ref={repackDialogRef} className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">{t('repack')}</h3>
+          <p className="py-4">{t('repackConfirm')}</p>
+          <div className="modal-action">
+            <button className="btn" onClick={() => repackDialogRef.current?.close()}>
+              {t('cancel')}
+            </button>
+            <button className="btn btn-warning" onClick={confirmRepack}>
+              {t('repack')}
+            </button>
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
     </div>
   )
 }

@@ -49,6 +49,10 @@
     "noReady": "No hay órdenes listas",
     "ship": "Enviar",
     "shipping": "Enviando...",
+    "repack": "Reempacar",
+    "repacking": "Reempacando...",
+    "repackConfirm": "Esto anulará las etiquetas compradas y enviará las órdenes seleccionadas de vuelta a empaque. ¿Continuar?",
+    "cancel": "Cancelar",
     "shipErrors": "Algunas órdenes tuvieron errores",
     "selectedCount": "{count} seleccionados",
     "table": {

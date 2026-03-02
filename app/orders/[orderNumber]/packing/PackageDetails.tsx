@@ -3,9 +3,10 @@ import { useOrder, useOrderActions } from "@/store/orderSlice"
 import { usePackage, usePackageActions } from "@/store/packageSlice"
 import { assignItemToPackage } from "@/actions/orders/assignItemToPackage"
 import { removeItemFromPackage } from "@/actions/orders/removeItemFromPackage"
+import { deletePackage } from "@/actions/orders/deletePackage"
 import { updatePackageWeight } from "@/actions/orders/updatePackageWeight"
 import { Order } from "@/actions/orders/getOrder"
-import { LuPackage, LuRuler, LuWeight } from "react-icons/lu"
+import { LuPackage, LuRuler, LuTrash2, LuWeight } from "react-icons/lu"
 import PackageItemCard from "./PackageItemCard"
 import AddNoteDialog from "@/components/notes/AddNoteDialog"
 import { useTranslations } from "next-intl"
@@ -47,6 +48,14 @@ const PackageDetails = () => {
     })
   }
 
+  const handleDelete = async () => {
+    if (!order || !selectedPackageId) return
+    const updated = await deletePackage(selectedPackageId, order.id)
+    setOrder(updated)
+    clearSelectedPackage()
+    setView('display')
+  }
+
   if (!pkg) return null
 
   const { box } = pkg
@@ -60,7 +69,13 @@ const PackageDetails = () => {
           setView('display');
           clearSelectedPackage();
         }} className="btn btn-xl btn-secondary">{t('backToPackages')}</button>
-        {selectedPackageId && <AddNoteDialog packageId={selectedPackageId} />}
+        <div className="flex items-center gap-3">
+          {selectedPackageId && <AddNoteDialog packageId={selectedPackageId} className="btn btn-xl btn-outline btn-secondary" />}
+          <button onClick={handleDelete} className="btn btn-xl btn-error">
+            <LuTrash2 className="size-6" />
+            {t('removePackage')}
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-6">

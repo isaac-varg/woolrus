@@ -11,9 +11,10 @@ type Props = {
   orderId?: string
   orderItemId?: string
   packageId?: string
+  className?: string
 }
 
-const AddNoteDialog = ({ orderId, orderItemId, packageId }: Props) => {
+const AddNoteDialog = ({ orderId, orderItemId, packageId, className }: Props) => {
   const router = useRouter()
   const t = useTranslations('notes')
   const dialogRef = useRef<HTMLDialogElement>(null)
@@ -122,7 +123,7 @@ const AddNoteDialog = ({ orderId, orderItemId, packageId }: Props) => {
 
   return (
     <>
-      <button className="btn btn-outline btn-secondary" onClick={handleOpen}>
+      <button className={className ?? "btn btn-outline btn-secondary"} onClick={handleOpen}>
         <LuMessageCircle className="size-6" />
         {t('addNote')}
       </button>

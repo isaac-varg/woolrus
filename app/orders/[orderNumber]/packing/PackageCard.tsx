@@ -16,7 +16,6 @@ const PackageCard = ({ pkg, items }: Props) => {
   const dimensions = `${box.length} × ${box.width} × ${box.height}`
   const { openPackageDetails } = usePackageActions()
   const t = useTranslations('orderPacking')
-  console.log(items)
 
   return (
     <div

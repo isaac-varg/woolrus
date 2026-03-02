@@ -11,8 +11,6 @@ const PackagesView = () => {
 
   const packages = order?.packages ?? []
 
-  console.log(packages);
-
   const getItemsForPackage = (packageId: string) =>
     order?.items.filter(item => item.packageId === packageId) ?? []
 
@@ -21,7 +19,9 @@ const PackagesView = () => {
   return (
     <div>
       {packages.length === 0 && (
-        <div className="text-lg text-base-content/60">{t('noPackagesYet')}</div>
+        <div className="text-lg text-base-content/60">
+          {t('noPackagesYet')}
+        </div>
       )}
 
       <div className="grid grid-cols-2 gap-6">

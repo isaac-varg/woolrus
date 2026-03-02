@@ -62,7 +62,15 @@ export default function Sidebar({
 
 
       {/* Bottom Stuff - Settings + Sync + collapse */}
+
       <div className="flex flex-col gap-2 py-4">
+        {!isSidebarCollapsed && (
+          <span className="text-xs text-base-content/50">
+            {t('sidebar.lastSync')}
+          </span>
+        )}
+
+
         <button
           onClick={() => router.push('/settings')}
           className={`btn btn-outline w-full transition-all duration-300 flex ${isSidebarCollapsed ? 'justify-center' : 'justify-start'}`}
@@ -70,11 +78,6 @@ export default function Sidebar({
           <TbSettings className="size-6" />
           {!isSidebarCollapsed && t('sidebar.settings')}
         </button>
-        {!isSidebarCollapsed && (
-          <span className="text-xs text-base-content/50">
-            {t('sidebar.lastSync')}
-          </span>
-        )}
         <button
           onClick={toggleSidebar}
           className={`btn btn-outline w-full transition-all duration-300 flex ${isSidebarCollapsed ? 'justify-center' : 'justify-start'}`}

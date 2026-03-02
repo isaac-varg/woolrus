@@ -1,8 +1,22 @@
-Start of this project 🎉🎉🎉
+# Woolrus
+Woolrus streamlines WooCommerce order fulfillment by providing warehouse staff with the ability to pick, pack, QA and generate shipping labels all in one place. 
 
-Will work on this later
+# Dependencies
 
-# scripts for dev
+- WooCommerce
+- [WPGraphQL](https://www.wpgraphql.com)
+- [WooGraphQL](https://woographql.com)
+- [WooGraphQL Pro](https://woographql.com)
+
+# Getting Started
+
+- Ensure dependencies installed on your Wordpress
+- `pnpm install`
+- `pnpm run dev`
+
+Docker image coming. 
+
+# Development Scripts 
 
 ```bash
 pnpm run sync:pull

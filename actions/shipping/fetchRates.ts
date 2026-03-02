@@ -6,13 +6,13 @@ import {
   getShipFromAddress,
   orderAddressToShipTo,
 } from '@/lib/shipstation'
-import type { RatePackage } from '@/lib/shipstation.types'
+import type { RatePackage, RateRequest } from '@/lib/shipstation.types'
 
 export const fetchRatesForOrder = async (orderId: string) => {
   const order = await prisma.order.findUniqueOrThrow({
     where: { id: orderId },
     include: {
-      packages: { include: { box: true } },
+      packages: { include: { box: true, items: true } },
     },
   })
 
@@ -54,13 +54,41 @@ export const fetchRatesForOrder = async (orderId: string) => {
       },
     }
 
-    const rateBody = {
+    // Create a ShipStation shipment (with sales order) if not already created
+    let shipmentId = pkg.shipmentId
+    if (!shipmentId) {
+      const shipmentResponse = await shipstation.createShipment({
+        shipments: [
+          {
+            ship_from: shipFrom,
+            ship_to: shipTo,
+            packages: [ratePackage],
+            items: pkg.items.map(item => ({
+              name: item.name,
+              sku: item.sku ?? undefined,
+              quantity: item.quantity,
+              external_order_id: order.orderNumber,
+              external_order_item_id: item.id,
+            })),
+            create_sales_order: true,
+            validate_address: 'no_validation',
+            external_order_id: order.orderNumber,
+            external_shipment_id: pkg.id,
+            order_source_code: 'woo_commerce',
+          },
+        ],
+      })
+      shipmentId = shipmentResponse.shipments[0].shipment_id
+      await prisma.package.update({
+        where: { id: pkg.id },
+        data: { shipmentId },
+      })
+    }
+
+    // Fetch rates using the existing shipment so the label stays linked to the sales order
+    const rateBody: RateRequest = {
       rate_options: { carrier_ids: carrierIds },
-      shipment: {
-        ship_from: shipFrom,
-        ship_to: shipTo,
-        packages: [ratePackage],
-      },
+      shipment_id: shipmentId,
     }
     const rateResponse = await shipstation.getRates(rateBody)
     const allRates = rateResponse.rate_response?.rates ?? []

@@ -26,16 +26,22 @@ export interface Dimensions {
   unit: 'inch' | 'centimeter'
 }
 
-export interface RateRequest {
+export type RateRequest = {
   rate_options: {
     carrier_ids: string[]
   }
-  shipment: {
-    ship_from: Address
-    ship_to: Address
-    packages: RatePackage[]
-  }
-}
+} & (
+  | {
+      shipment: {
+        ship_from: Address
+        ship_to: Address
+        packages: RatePackage[]
+      }
+    }
+  | {
+      shipment_id: string
+    }
+)
 
 export interface RatePackage {
   weight: Weight
@@ -157,4 +163,38 @@ export interface CarrierServiceInfo {
 export interface ShipStationErrorBody {
   request_id?: string
   errors?: ApiError[]
+}
+
+export interface ShipmentItem {
+  name: string
+  sku?: string
+  quantity: number
+  external_order_id?: string
+  external_order_item_id?: string
+}
+
+export interface CreateShipmentRequest {
+  shipments: {
+    ship_to: Address
+    ship_from: Address
+    packages: RatePackage[]
+    items?: ShipmentItem[]
+    create_sales_order: boolean
+    validate_address: 'no_validation' | 'validate_only' | 'validate_and_clean'
+    external_order_id?: string
+    external_shipment_id?: string
+    order_source_code?: string
+  }[]
+}
+
+export interface CreateShipmentResponse {
+  shipments: {
+    shipment_id: string
+    carrier_id: string | null
+    service_code: string | null
+    ship_date: string
+    created_at: string
+    modified_at: string
+    shipment_status: string
+  }[]
 }

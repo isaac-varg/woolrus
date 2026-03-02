@@ -8,6 +8,8 @@ import type {
   Carrier,
   CarrierServiceInfo,
   ShipStationErrorBody,
+  CreateShipmentRequest,
+  CreateShipmentResponse,
 } from './shipstation.types'
 
 const BASE_URL = 'https://api.shipstation.com/v2'
@@ -76,6 +78,7 @@ async function request<T>(
     if (!retryRes.ok) {
       let retryBody: ShipStationErrorBody | null = null
       try { retryBody = await retryRes.json() } catch { }
+
       throw new ShipStationError(
         `ShipStation API error: ${retryRes.status}`,
         retryRes.status,
@@ -89,6 +92,7 @@ async function request<T>(
   if (!res.ok) {
     let body: ShipStationErrorBody | null = null
     try { body = await res.json() } catch { }
+    console.log('two', JSON.stringify(body, null, 2))
     throw new ShipStationError(
       `ShipStation API error: ${res.status}`,
       res.status,
@@ -140,6 +144,12 @@ export function orderAddressToShipTo(shipping: WooShippingAddress): Address {
 }
 
 export const shipstation = {
+  createShipment: (body: CreateShipmentRequest) =>
+    request<CreateShipmentResponse>('/shipments', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    }),
+
   getRates: (body: RateRequest) =>
     request<RateResponse>('/rates', {
       method: 'POST',

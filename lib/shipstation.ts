@@ -76,7 +76,6 @@ async function request<T>(
     if (!retryRes.ok) {
       let retryBody: ShipStationErrorBody | null = null
       try { retryBody = await retryRes.json() } catch { }
-      console.log('frist', JSON.stringify(retryBody, null, 2))
       throw new ShipStationError(
         `ShipStation API error: ${retryRes.status}`,
         retryRes.status,
@@ -90,7 +89,6 @@ async function request<T>(
   if (!res.ok) {
     let body: ShipStationErrorBody | null = null
     try { body = await res.json() } catch { }
-    console.log('second', JSON.stringify(body, null, 2));
     throw new ShipStationError(
       `ShipStation API error: ${res.status}`,
       res.status,

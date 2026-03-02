@@ -14,8 +14,6 @@ export const purchaseLabelsForOrder = async (orderId: string) => {
 
   const trackingNumbers: string[] = []
 
-  console.log('rates', JSON.stringify(packages, null, 2))
-
   for (const pkg of packages) {
     // Skip if already has an active label
     if (pkg.shippingLabel && pkg.shippingLabel.status === 'active') {

@@ -47,6 +47,10 @@
     "quality": "Calidad",
     "ready": "Listo",
     "noReady": "No hay órdenes listas",
+    "ship": "Enviar",
+    "shipping": "Enviando...",
+    "shipErrors": "Algunas órdenes tuvieron errores",
+    "selectedCount": "{count} seleccionados",
     "table": {
       "orderNumber": "Orden #",
       "customer": "Cliente",

@@ -86,3 +86,25 @@ export const GET_PROCESSING_ORDERS = gql`
     }
   }
 `;
+
+export const UPDATE_ORDER_STATUS = gql`
+  mutation UpdateOrderStatus($input: UpdateOrderInput!) {
+    updateOrder(input: $input) {
+      order {
+        databaseId
+        status
+      }
+    }
+  }
+`;
+
+export const ADD_ORDER_NOTE = gql`
+  mutation AddOrderNote($orderId: Int!, $note: String!, $isCustomerNote: Boolean) {
+    createOrderNote(input: { orderId: $orderId, note: $note, isCustomerNote: $isCustomerNote }) {
+      note {
+        id
+        content
+      }
+    }
+  }
+`;

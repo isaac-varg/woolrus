@@ -35,7 +35,7 @@ export const purchaseLabelsForOrder = async (orderId: string) => {
       rate_id: selectedRate.rateId,
       label_format: 'pdf',
       label_layout: '4x6',
-      label_download_type: 'inline',
+      label_download_type: 'url',
       validate_address: 'validate_only',
       display_scheme: "label",
     })

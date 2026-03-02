@@ -47,6 +47,10 @@
     "quality": "Quality",
     "ready": "Ready",
     "noReady": "No orders ready",
+    "ship": "Ship",
+    "shipping": "Shipping...",
+    "shipErrors": "Some orders had errors",
+    "selectedCount": "{count} selected",
     "table": {
       "orderNumber": "Order #",
       "customer": "Customer",

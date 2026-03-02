@@ -3,6 +3,7 @@ enum WorkflowStatus {
   PICKING
   PACKING
   QA
+  READY
   COMPLETED
   ON_HOLD
   CANCELLED

@@ -83,8 +83,11 @@ export interface RateResponse {
 
 export interface LabelRequest {
   rate_id: string
+  validate_address: "no_validation" | "validate_only" | "validate_and_clean"
   label_format?: 'pdf' | 'png' | 'zpl'
   label_layout?: '4x6' | 'letter'
+  label_download_type: "url" | "inline"
+  display_scheme: "label" | 'qr_code'
 }
 
 export interface LabelResponse {

@@ -20,22 +20,20 @@ export const completeQA = async (orderId: string) => {
     where: { orderId },
     create: {
       orderId,
-      status: WorkflowStatus.COMPLETED,
+      status: WorkflowStatus.READY,
       qaById,
       qaCompletedAt: new Date(),
-      completedAt: new Date(),
     },
     update: {
-      status: WorkflowStatus.COMPLETED,
+      status: WorkflowStatus.READY,
       qaById,
       qaCompletedAt: new Date(),
-      completedAt: new Date(),
     },
   })
 
   await prisma.order.update({
     where: { id: orderId },
-    data: { workflowStatus: WorkflowStatus.COMPLETED },
+    data: { workflowStatus: WorkflowStatus.READY },
   })
 
   return getOrder(orderId)

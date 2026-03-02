@@ -14,6 +14,8 @@ export const purchaseLabelsForOrder = async (orderId: string) => {
 
   const trackingNumbers: string[] = []
 
+  console.log('rates', JSON.stringify(packages, null, 2))
+
   for (const pkg of packages) {
     // Skip if already has an active label
     if (pkg.shippingLabel && pkg.shippingLabel.status === 'active') {
@@ -28,9 +30,14 @@ export const purchaseLabelsForOrder = async (orderId: string) => {
       throw new Error(`No shipping rate selected for package ${pkg.id}`)
     }
 
+
     const labelResponse = await shipstation.purchaseLabelFromRate({
       rate_id: selectedRate.rateId,
       label_format: 'pdf',
+      label_layout: '4x6',
+      label_download_type: 'inline',
+      validate_address: 'validate_only',
+      display_scheme: "label",
     })
 
     await prisma.shippingLabel.create({

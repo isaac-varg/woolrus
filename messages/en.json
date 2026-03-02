@@ -4,6 +4,7 @@
     "picking": "Picking",
     "packing": "Packing",
     "quality": "Quality",
+    "ready": "Ready",
     "collapse": "Collapse Sidebar",
     "lastSync": "Last Sync: 2 minutes ago",
     "settings": "Settings"
@@ -44,6 +45,8 @@
     "picking": "Picking",
     "packing": "Packing",
     "quality": "Quality",
+    "ready": "Ready",
+    "noReady": "No orders ready",
     "table": {
       "orderNumber": "Order #",
       "customer": "Customer",
@@ -62,6 +65,7 @@
       "PICKING": "Picking",
       "PACKING": "Packing",
       "QA": "Quality",
+      "READY": "Ready",
       "COMPLETED": "Completed",
       "ON_HOLD": "On Hold",
       "CANCELLED": "Cancelled"

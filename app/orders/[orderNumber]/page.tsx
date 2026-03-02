@@ -4,6 +4,7 @@ import Pending from "./pending/Pending"
 import State from "./shared/State"
 import Packing from "./packing/Packing"
 import QA from "./qa/QA"
+import Ready from "./ready/Ready"
 
 type Props = {
   searchParams: Promise<{
@@ -31,6 +32,9 @@ const OrderPage = async ({ searchParams }: Props) => {
       break
     case "QA":
       content = <QA />
+      break
+    case "READY":
+      content = <Ready />
       break
     default:
       content = null

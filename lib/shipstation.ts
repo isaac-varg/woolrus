@@ -55,7 +55,7 @@ async function request<T>(
   if (res.status === 429) {
     const retryAfter = parseInt(res.headers.get('Retry-After') ?? '2', 10)
     let body: ShipStationErrorBody | null = null
-    try { body = await res.json() } catch {}
+    try { body = await res.json() } catch { }
 
     // Single retry after waiting
     await new Promise(resolve => setTimeout(resolve, retryAfter * 1000))
@@ -75,7 +75,8 @@ async function request<T>(
 
     if (!retryRes.ok) {
       let retryBody: ShipStationErrorBody | null = null
-      try { retryBody = await retryRes.json() } catch {}
+      try { retryBody = await retryRes.json() } catch { }
+      console.log('frist', JSON.stringify(retryBody, null, 2))
       throw new ShipStationError(
         `ShipStation API error: ${retryRes.status}`,
         retryRes.status,
@@ -88,7 +89,8 @@ async function request<T>(
 
   if (!res.ok) {
     let body: ShipStationErrorBody | null = null
-    try { body = await res.json() } catch {}
+    try { body = await res.json() } catch { }
+    console.log('second', JSON.stringify(body, null, 2));
     throw new ShipStationError(
       `ShipStation API error: ${res.status}`,
       res.status,
@@ -147,7 +149,7 @@ export const shipstation = {
     }),
 
   purchaseLabelFromRate: (body: LabelRequest) =>
-    request<LabelResponse>('/labels', {
+    request<LabelResponse>(`/labels/rates/${body.rate_id}`, {
       method: 'POST',
       body: JSON.stringify(body),
     }),

@@ -17,4 +17,8 @@ export const links: SidebarButton[] = [
     path: '/orders?status=QA',
     title: 'sidebar.quality',
   },
+  {
+    path: '/orders?status=READY',
+    title: 'sidebar.ready',
+  },
 ]

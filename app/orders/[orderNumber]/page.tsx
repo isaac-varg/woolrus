@@ -34,6 +34,7 @@ const OrderPage = async ({ searchParams }: Props) => {
       content = <QA />
       break
     case "READY":
+    case "COMPLETED":
       content = <Ready />
       break
     default:

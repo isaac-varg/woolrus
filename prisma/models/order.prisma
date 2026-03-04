@@ -20,4 +20,5 @@ model Order {
   notes           Note[]
   shippingRates   ShippingRate[]
   shippingLabels  ShippingLabel[]
+  qualityIssues   QualityIssue[]
 }

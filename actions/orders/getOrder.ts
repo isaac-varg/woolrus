@@ -57,7 +57,24 @@ export const getOrder = async (orderId: string) => {
           attachments: true,
         },
         orderBy: { createdAt: 'desc' },
-      }
+      },
+      qualityIssues: {
+        include: {
+          reportedBy: { select: { id: true, name: true, image: true } },
+          responsible: { select: { id: true, name: true, image: true } },
+          resolvedBy: { select: { id: true, name: true, image: true } },
+          orderItem: true,
+          package: true,
+          notes: {
+            include: {
+              author: { select: { id: true, name: true, image: true } },
+              attachments: true,
+            },
+            orderBy: { createdAt: 'desc' },
+          },
+        },
+        orderBy: { createdAt: 'desc' },
+      },
     }
   });
 
@@ -86,6 +103,10 @@ export const getOrder = async (orderId: string) => {
     packages: await Promise.all(order.packages.map(async (pkg) => ({
       ...pkg,
       notes: await enrichAttachments(pkg.notes),
+    }))),
+    qualityIssues: await Promise.all(order.qualityIssues.map(async (issue) => ({
+      ...issue,
+      notes: await enrichAttachments(issue.notes),
     }))),
   };
 

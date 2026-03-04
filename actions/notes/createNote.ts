@@ -8,15 +8,17 @@ export const createNote = async ({
   orderId,
   orderItemId,
   packageId,
+  qualityIssueId,
   content,
 }: {
   orderId?: string
   orderItemId?: string
   packageId?: string
+  qualityIssueId?: string
   content?: string
 }) => {
-  if (!orderId && !orderItemId && !packageId) {
-    throw new Error("At least one of orderId, orderItemId, or packageId must be provided.")
+  if (!orderId && !orderItemId && !packageId && !qualityIssueId) {
+    throw new Error("At least one of orderId, orderItemId, packageId, or qualityIssueId must be provided.")
   }
 
   const session = await auth()
@@ -31,6 +33,7 @@ export const createNote = async ({
       orderId,
       orderItemId,
       packageId,
+      qualityIssueId,
       authorId: user.id,
       content,
     },

@@ -23,4 +23,5 @@ model OrderItem {
   packageId      String?
   package        Package?          @relation(fields: [packageId], references: [id], onDelete: SetNull)
   notes          Note[]
+  qualityIssues  QualityIssue[]
 }

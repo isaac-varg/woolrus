@@ -1,8 +1,10 @@
 import { useOrder } from "@/store/orderSlice"
 import { formatDate } from "@/utils/date/formatDate"
 import { TbClipboardList, TbUser, TbNotes, TbBox, TbTruck } from "react-icons/tb"
+import { LuShieldAlert } from "react-icons/lu"
 import Image from "next/image"
 import NoteAttachments from "@/components/notes/NoteAttachments"
+import { useTranslations } from "next-intl"
 
 type ShippingAddress = {
   firstName?: string
@@ -17,6 +19,7 @@ type ShippingAddress = {
 
 const QADrawerContent = () => {
   const { order } = useOrder()
+  const t = useTranslations('qualityIssue')
 
   const shipping = order?.shippingAddress as ShippingAddress | null
   const workflow = order?.workflow
@@ -214,6 +217,33 @@ const QADrawerContent = () => {
           )}
         </div>
       </div>
+
+      {order?.qualityIssues && order.qualityIssues.length > 0 && (
+        <>
+          <div className="divider my-0" />
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-2 text-base-content/60">
+              <LuShieldAlert className="size-5" />
+              <span className="font-semibold text-sm uppercase tracking-wide">{t('title')}</span>
+            </div>
+            <div className="flex flex-col gap-2 pl-7">
+              {order.qualityIssues.map((issue) => (
+                <div key={issue.id} className="flex flex-col gap-1 rounded-lg bg-base-200 p-2">
+                  <div className="flex flex-wrap gap-1">
+                    <span className={`badge badge-xs ${issue.severity === 'CRITICAL' ? 'badge-error' : issue.severity === 'MAJOR' ? 'badge-warning' : 'badge-info'}`}>
+                      {t(`severities.${issue.severity}`)}
+                    </span>
+                    <span className="badge badge-xs badge-outline">{t(`types.${issue.type}`)}</span>
+                    {issue.resolvedAt && <span className="badge badge-xs badge-success">{t('resolved')}</span>}
+                  </div>
+                  {issue.description && <span className="text-sm text-base-content">{issue.description}</span>}
+                  <span className="text-xs text-base-content/50">{t('reportedBy')} {issue.reportedBy.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
 
       <div className="divider my-0" />
 

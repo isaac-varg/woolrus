@@ -15,6 +15,9 @@ interface OrderActions {
     updateItemQAStatus: (itemId: string, isQAVerified: boolean) => void;
     assignItemToPackage: (itemId: string, packageId: string) => void;
     removeItemFromPackage: (itemId: string) => void;
+    addQualityIssue: (issue: Order['qualityIssues'][number]) => void;
+    removeQualityIssue: (issueId: string) => void;
+    updateQualityIssue: (issueId: string, updates: Partial<Order['qualityIssues'][number]>) => void;
   }
 }
 
@@ -78,6 +81,35 @@ export const useOrder = create<OrderState & OrderActions>((set) => ({
           ...state.order,
           items: state.order.items.map((item) =>
             item.id === itemId ? { ...item, packageId: null } : item
+          ),
+        },
+      }
+    }),
+    addQualityIssue: (issue) => set((state) => {
+      if (!state.order) return state
+      return {
+        order: {
+          ...state.order,
+          qualityIssues: [...state.order.qualityIssues, issue],
+        },
+      }
+    }),
+    removeQualityIssue: (issueId) => set((state) => {
+      if (!state.order) return state
+      return {
+        order: {
+          ...state.order,
+          qualityIssues: state.order.qualityIssues.filter((i) => i.id !== issueId),
+        },
+      }
+    }),
+    updateQualityIssue: (issueId, updates) => set((state) => {
+      if (!state.order) return state
+      return {
+        order: {
+          ...state.order,
+          qualityIssues: state.order.qualityIssues.map((i) =>
+            i.id === issueId ? { ...i, ...updates } : i
           ),
         },
       }

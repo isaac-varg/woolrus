@@ -18,4 +18,7 @@ model User {
   orderWorkflowsPacked    OrderWorkflow[] @relation("OrderWorkflowPackedBy")
   orderWorkflowsQA        OrderWorkflow[] @relation("OrderWorkflowQABy")
   notes                   Note[]
+  qualityIssuesReported   QualityIssue[] @relation("QualityIssueReportedBy")
+  qualityIssuesResponsible QualityIssue[] @relation("QualityIssueResponsible")
+  qualityIssuesResolved   QualityIssue[] @relation("QualityIssueResolvedBy")
 }

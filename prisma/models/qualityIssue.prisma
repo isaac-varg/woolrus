@@ -1,0 +1,32 @@
+model QualityIssue {
+  id               String               @id @default(uuid())
+  orderId          String
+  orderItemId      String?
+  packageId        String?
+  type             QualityIssueType
+  severity         QualityIssueSeverity
+  description      String?
+  stageDiscovered  WorkflowStatus
+  stageOriginated  WorkflowStatus?
+  isCustomerReported Boolean            @default(false)
+  reportedById     String
+  responsibleId    String?
+  resolutionNotes  String?
+  resolvedAt       DateTime?
+  resolvedById     String?
+  triggeredRepack  Boolean              @default(false)
+  linkedLabelId    String?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+
+  order         Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderItem     OrderItem?     @relation(fields: [orderItemId], references: [id], onDelete: SetNull)
+  package       Package?       @relation(fields: [packageId], references: [id], onDelete: SetNull)
+  reportedBy    User           @relation("QualityIssueReportedBy", fields: [reportedById], references: [id])
+  responsible   User?          @relation("QualityIssueResponsible", fields: [responsibleId], references: [id])
+  resolvedBy    User?          @relation("QualityIssueResolvedBy", fields: [resolvedById], references: [id])
+  linkedLabel   ShippingLabel? @relation(fields: [linkedLabelId], references: [id], onDelete: SetNull)
+  notes         Note[]
+
+  @@index([orderId])
+}

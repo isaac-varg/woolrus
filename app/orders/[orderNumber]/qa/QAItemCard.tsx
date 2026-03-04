@@ -5,6 +5,9 @@ import { Order } from "@/actions/orders/getOrder"
 import Image from "next/image"
 import AddNoteDialog from "@/components/notes/AddNoteDialog"
 import NoteIndicator from "@/components/notes/NoteIndicator"
+import ReportIssueDialog from "@/components/quality/ReportIssueDialog"
+import QualityIssueBadge from "@/components/quality/QualityIssueBadge"
+import { useOrder } from "@/store/orderSlice"
 
 type Props = {
   item: Order['items'][number]
@@ -13,8 +16,10 @@ type Props = {
 }
 
 const QAItemCard = ({ item, completed, onToggle }: Props) => {
-
+  const { order } = useOrder()
   const attributes = item.attributes as { name: string; value: string }[] | null
+  const itemIssues = order?.qualityIssues.filter(i => i.orderItemId === item.id) ?? []
+  const hasCritical = itemIssues.some(i => i.severity === 'CRITICAL' && !i.resolvedAt)
 
   return (
     <div
@@ -77,6 +82,15 @@ const QAItemCard = ({ item, completed, onToggle }: Props) => {
         <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
           <AddNoteDialog orderItemId={item.id} />
           <NoteIndicator count={item.notes?.length ?? 0} />
+          {order && (
+            <ReportIssueDialog
+              orderId={order.id}
+              orderItemId={item.id}
+              stageDiscovered="QA"
+              className="btn btn-outline btn-warning btn-sm"
+            />
+          )}
+          <QualityIssueBadge count={itemIssues.length} hasCritical={hasCritical} />
         </div>
       </div>
 

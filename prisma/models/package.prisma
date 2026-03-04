@@ -11,5 +11,6 @@ model Package {
   items         OrderItem[]
   notes         Note[]
   shippingRates ShippingRate[]
-  shippingLabel ShippingLabel?
+  shippingLabel  ShippingLabel?
+  qualityIssues  QualityIssue[]
 }

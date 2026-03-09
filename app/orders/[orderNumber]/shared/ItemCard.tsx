@@ -6,7 +6,12 @@ import { Order } from "@/actions/orders/getOrder"
 import Image from "next/image"
 import AddNoteDialog from "@/components/notes/AddNoteDialog"
 import NoteIndicator from "@/components/notes/NoteIndicator"
+import VoidItemButton from "@/components/void/VoidItemButton"
+import { unvoidItem } from "@/actions/orders/unvoidItem"
+import { useOrderActions } from "@/store/orderSlice"
+import { useRouter } from "next/navigation"
 import { useTranslations } from "next-intl"
+import { LuUndo2 } from "react-icons/lu"
 
 type Props = {
   item: Order['items'][number];
@@ -16,12 +21,21 @@ type Props = {
 
 const ItemCard = ({ item, completed, onToggle }: Props) => {
   const t = useTranslations('orderDetail')
+  const tVoid = useTranslations('void')
+  const { unvoidItem: unvoidLocal } = useOrderActions()
+  const router = useRouter()
   const attributes = item.attributes as { name: string; value: string }[] | null
+
+  const handleUnvoid = async () => {
+    unvoidLocal(item.id)
+    await unvoidItem(item.id)
+    router.refresh()
+  }
 
   return (
     <div
-      onClick={() => onToggle?.(item)}
-      className={`relative card card-side shadow-md border-2 transition-colors ${onToggle ? 'cursor-pointer' : ''} ${completed ? 'border-success bg-success/20' : 'border-transparent bg-base-100'}`}
+      onClick={() => !item.isVoided && onToggle?.(item)}
+      className={`relative card card-side shadow-md border-2 transition-colors ${item.isVoided ? 'opacity-50 border-error/30 bg-base-200' : onToggle ? 'cursor-pointer' : ''} ${!item.isVoided && completed ? 'border-success bg-success/20' : !item.isVoided ? 'border-transparent bg-base-100' : ''}`}
     >
 
       {item.imageUrl && (
@@ -66,10 +80,24 @@ const ItemCard = ({ item, completed, onToggle }: Props) => {
         <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
           <AddNoteDialog orderItemId={item.id} />
           <NoteIndicator count={item.notes?.length ?? 0} />
+          {item.isVoided ? (
+            <button className="btn btn-ghost btn-sm" onClick={handleUnvoid}>
+              <LuUndo2 className="size-4" />
+              {tVoid('unvoid')}
+            </button>
+          ) : (
+            <VoidItemButton itemId={item.id} />
+          )}
         </div>
       </div>
 
-      {onToggle && (
+      {item.isVoided && (
+        <div className="absolute right-4 top-1/2 -translate-y-1/2">
+          <span className="badge badge-error badge-lg text-lg font-bold">{tVoid('voided')}</span>
+        </div>
+      )}
+
+      {!item.isVoided && onToggle && (
         <div className={`absolute right-4 top-1/2 -translate-y-1/2 transition-colors ${completed ? 'text-success' : 'text-base-content/40'}`}>
           {completed
             ? <LuCircleCheckBig className="size-10" />

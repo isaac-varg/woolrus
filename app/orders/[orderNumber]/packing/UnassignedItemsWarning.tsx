@@ -6,7 +6,7 @@ const UnassignedItemsWarning = () => {
   const { order } = useOrder()
   const t = useTranslations('orderPacking')
 
-  const unassignedCount = order?.items.filter(i => !i.packageId).length ?? 0
+  const unassignedCount = order?.items.filter(i => !i.packageId && !i.isVoided).length ?? 0
 
   if (unassignedCount === 0) return null
 

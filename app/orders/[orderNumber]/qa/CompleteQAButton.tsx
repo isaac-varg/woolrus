@@ -16,8 +16,9 @@ const CompleteQAButton = () => {
   const items = order?.items ?? []
   const packages = order?.packages ?? []
 
+  const activeItems = items.filter(i => !i.isVoided)
   const allVerified = packages.length > 0 && packages.every(pkg => {
-    const pkgItems = items.filter(i => i.packageId === pkg.id)
+    const pkgItems = activeItems.filter(i => i.packageId === pkg.id)
     return pkgItems.length > 0 && pkgItems.every(i => i.isQAVerified)
   })
 

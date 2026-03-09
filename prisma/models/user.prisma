@@ -21,4 +21,6 @@ model User {
   qualityIssuesReported   QualityIssue[] @relation("QualityIssueReportedBy")
   qualityIssuesResponsible QualityIssue[] @relation("QualityIssueResponsible")
   qualityIssuesResolved   QualityIssue[] @relation("QualityIssueResolvedBy")
+  orderItemsVoided        OrderItem[]    @relation("OrderItemVoidedBy")
+  orderVoidsResolved      OrderVoid[]    @relation("OrderVoidResolvedBy")
 }

@@ -14,9 +14,11 @@ const ItemVerification = ({ onNext }: ItemVerificationProps) => {
   const { updateItemPackStatus: updatePackStatus } = useOrderActions()
   const t = useTranslations('orderPacking')
 
-  const allPacked = order?.items.every(i => i.isPacked) ?? false
+  const activeItems = order?.items.filter(i => !i.isVoided) ?? []
+  const allPacked = activeItems.length > 0 && activeItems.every(i => i.isPacked)
 
   const handleToggle = async (item: Order['items'][number]) => {
+    if (item.isVoided) return
     const next = !item.isPacked
     updatePackStatus(item.id, next)
     await updateItemPackStatus(item.id, next)

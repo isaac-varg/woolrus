@@ -20,6 +20,7 @@ const statusBadge: Record<WorkflowStatus, string> = {
   PICKING: "badge-info",
   PACKING: "badge-primary",
   QA: "badge-secondary",
+  READY: "badge-accent",
   COMPLETED: "badge-success",
   ON_HOLD: "badge-warning",
   CANCELLED: "badge-error",
@@ -30,6 +31,7 @@ const Top = () => {
   const router = useRouter()
   const { toggle } = useDrawerActions()
   const t = useTranslations('orderDetail')
+  const tVoid = useTranslations('void')
 
   const shipping = order?.shippingAddress as ShippingAddress | null
 
@@ -42,6 +44,12 @@ const Top = () => {
             <div className="text-4xl text-base-content font-semibold">{t('orderNumber', { orderNumber: order?.orderNumber ?? '' })}</div>
             {order?.id && <AddNoteDialog orderId={order.id} />}
             <NoteIndicator count={order?.notes?.length ?? 0} />
+            {(() => {
+              const voidedCount = order?.items.filter(i => i.isVoided).length ?? 0
+              return voidedCount > 0 ? (
+                <span className="badge badge-error">{tVoid('voidedItems', { count: voidedCount })}</span>
+              ) : null
+            })()}
           </div>
 
           <div className="flex gap-4">

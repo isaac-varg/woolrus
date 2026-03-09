@@ -12,7 +12,8 @@ const CompletionButtons = () => {
   const router = useRouter()
   const t = useTranslations('orderPicking')
 
-  const allPicked = order?.items.length && order.items.every(i => i.pickStatus === PickStatus.PICKED)
+  const activeItems = order?.items.filter(i => !i.isVoided) ?? []
+  const allPicked = activeItems.length > 0 && activeItems.every(i => i.pickStatus === PickStatus.PICKED)
 
   if (!allPicked) return null
 

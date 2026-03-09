@@ -7,8 +7,9 @@ const UnverifiedItemsWarning = () => {
   const packages = order?.packages ?? []
   const items = order?.items ?? []
 
+  const activeItems = items.filter(i => !i.isVoided)
   const unverifiedPackageCount = packages.filter(pkg => {
-    const pkgItems = items.filter(i => i.packageId === pkg.id)
+    const pkgItems = activeItems.filter(i => i.packageId === pkg.id)
     return pkgItems.length > 0 && !pkgItems.every(i => i.isQAVerified)
   }).length
 

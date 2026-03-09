@@ -7,6 +7,7 @@ const bucket = process.env.S3_NOTES_BUCKET!
 
 const itemInclude = {
   pickedBy: { select: { id: true, name: true, image: true } },
+  voidedBy: { select: { id: true, name: true, image: true } },
   notes: {
     include: {
       author: { select: { id: true, name: true, image: true } },

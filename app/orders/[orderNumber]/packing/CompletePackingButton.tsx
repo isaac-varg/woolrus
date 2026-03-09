@@ -9,7 +9,8 @@ const CompletePackingButton = () => {
   const router = useRouter()
   const t = useTranslations('orderPacking')
 
-  const allAssigned = order?.items.length && order.items.every(i => i.packageId)
+  const activeItems = order?.items.filter(i => !i.isVoided) ?? []
+  const allAssigned = activeItems.length > 0 && activeItems.every(i => i.packageId)
   const allWeighed = order?.packages.length && order.packages.every(p => p.weight != null)
 
   if (!allAssigned || !allWeighed) return null

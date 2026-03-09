@@ -17,6 +17,9 @@ export const getOrder = async (orderId: string) => {
           pickedBy: {
             select: { id: true, name: true, image: true }
           },
+          voidedBy: {
+            select: { id: true, name: true, image: true }
+          },
           notes: {
             include: {
               author: { select: { id: true, name: true, image: true } },
@@ -55,6 +58,15 @@ export const getOrder = async (orderId: string) => {
         include: {
           author: { select: { id: true, name: true, image: true } },
           attachments: true,
+        },
+        orderBy: { createdAt: 'desc' },
+      },
+      orderVoids: {
+        include: {
+          orderItem: {
+            select: { id: true, name: true, sku: true, imageUrl: true },
+          },
+          resolvedBy: { select: { id: true, name: true, image: true } },
         },
         orderBy: { createdAt: 'desc' },
       },

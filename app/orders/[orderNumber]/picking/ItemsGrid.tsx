@@ -12,6 +12,7 @@ const ItemsGrid = () => {
   const { updateItemPickStatus: updateLocal } = useOrderActions()
 
   const handleToggle = async (item: Order['items'][number]) => {
+    if (item.isVoided) return
     const next = item.pickStatus === PickStatus.PICKED ? PickStatus.PENDING : PickStatus.PICKED
     updateLocal(item.id, next)
     await updateItemPickStatus(item.id, next)

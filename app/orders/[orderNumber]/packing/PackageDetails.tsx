@@ -19,7 +19,7 @@ const PackageDetails = () => {
 
   const pkg = order?.packages.find(p => p.id === selectedPackageId)
   const packageItems = order?.items.filter(item => item.packageId === selectedPackageId) ?? []
-  const unassignedItems = order?.items.filter(item => !item.packageId) ?? []
+  const unassignedItems = order?.items.filter(item => !item.packageId && !item.isVoided) ?? []
 
   const t = useTranslations('orderPacking')
   const [weight, setWeight] = useState<string>(pkg?.weight?.toString() ?? '')

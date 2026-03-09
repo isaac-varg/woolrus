@@ -5,6 +5,7 @@
     "packing": "Packing",
     "quality": "Quality",
     "ready": "Ready",
+    "voids": "Voids",
     "collapse": "Collapse Sidebar",
     "lastSync": "Last Sync: 2 minutes ago",
     "settings": "Settings"
@@ -143,6 +144,26 @@
     "filterAll": "All",
     "filterOpen": "Open",
     "filterResolved": "Resolved"
+  },
+  "void": {
+    "voidItem": "Void Item",
+    "unvoid": "Unvoid",
+    "voided": "VOIDED",
+    "voidReason": "Reason for voiding",
+    "reasonPlaceholder": "Out of stock, customer cancelled, etc...",
+    "confirm": "Void Item",
+    "cancel": "Cancel",
+    "resolveVoid": "Resolve Void",
+    "resolutionPlaceholder": "How was this handled in WooCommerce?",
+    "resolve": "Resolve",
+    "voidedItems": "{count} voided",
+    "allItemsVoided": "All items in this order have been voided. The order cannot proceed.",
+    "stageVoided": "Voided at",
+    "noUnresolvedVoids": "No unresolved voids.",
+    "unresolvedVoids": "Unresolved Voids",
+    "item": "Item",
+    "reason": "Reason",
+    "orderNumber": "Order #{orderNumber}"
   },
   "orderPacking": {
     "pickedBy": "Picked by",

@@ -21,4 +21,8 @@ export const links: SidebarButton[] = [
     path: '/orders?status=READY',
     title: 'sidebar.ready',
   },
+  {
+    path: '/voids',
+    title: 'sidebar.voids',
+  },
 ]

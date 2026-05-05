@@ -21,11 +21,13 @@ export const completePacking = async (orderId: string) => {
       status: WorkflowStatus.QA,
       packedById,
       packCompletedAt: new Date(),
+      qaStartedAt: new Date(),
     },
     update: {
       status: WorkflowStatus.QA,
       packedById,
       packCompletedAt: new Date(),
+      qaStartedAt: new Date(),
     },
   })
 

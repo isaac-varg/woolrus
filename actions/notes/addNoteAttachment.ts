@@ -1,7 +1,7 @@
 'use server'
 
 import prisma from "@/lib/prisma"
-import { s3 } from "@/lib/s3"
+import { putObject } from "@/lib/s3"
 import { NoteMediaType } from "@/prisma/generated/enums"
 import { randomUUID } from "crypto"
 
@@ -23,9 +23,7 @@ export const addNoteAttachment = async (noteId: string, formData: FormData) => {
 
   const buffer = Buffer.from(await file.arrayBuffer())
 
-  await s3.putObject(bucket, s3Key, buffer, fileSize, {
-    'Content-Type': file.type,
-  })
+  await putObject(bucket, s3Key, buffer, file.type)
 
   const attachment = await prisma.noteAttachment.create({
     data: {

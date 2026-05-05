@@ -1,7 +1,7 @@
 'use server'
 
 import prisma from "@/lib/prisma"
-import { s3 } from "@/lib/s3"
+import { presignedGetObject } from "@/lib/s3"
 
 const bucket = process.env.S3_NOTES_BUCKET!
 
@@ -87,7 +87,7 @@ export const assignItemToPackage = async (itemId: string, packageId: string) => 
       attachments: await Promise.all(
         note.attachments.map(async (att) => ({
           ...att,
-          url: await s3.presignedGetObject(bucket, att.s3Key, 3600),
+          url: await presignedGetObject(bucket, att.s3Key, 3600),
         }))
       ),
     }))),

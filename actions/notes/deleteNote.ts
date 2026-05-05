@@ -1,7 +1,7 @@
 'use server'
 
 import prisma from "@/lib/prisma"
-import { s3 } from "@/lib/s3"
+import { removeObject } from "@/lib/s3"
 
 const bucket = process.env.S3_NOTES_BUCKET!
 
@@ -16,7 +16,7 @@ export const deleteNote = async (noteId: string) => {
   }
 
   for (const attachment of note.attachments) {
-    await s3.removeObject(bucket, attachment.s3Key)
+    await removeObject(bucket, attachment.s3Key)
   }
 
   await prisma.note.delete({

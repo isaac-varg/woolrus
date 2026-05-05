@@ -8,6 +8,7 @@ import { links } from "@/lib/sidebar/links";
 import SidebarButton from "./SidebarButton";
 import { useFormatter, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { menu } from "@/lib/sidebar/menu";
 
 export default function Sidebar({
   initialCollapsed,
@@ -69,6 +70,21 @@ export default function Sidebar({
           />
           )}
         </div>
+
+        <hr className="border-t-2  border-base-300" />
+
+        <div
+          className="flex flex-col gap-6"
+        >
+          {menu.map(link => <SidebarButton
+            key={link.title}
+            title={t(link.title)}
+            path={link.path}
+            icon={link.icon}
+          />
+          )}
+        </div>
+
 
       </div>
 

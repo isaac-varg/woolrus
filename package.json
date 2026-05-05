@@ -19,6 +19,7 @@
     "@prisma/adapter-pg": "^7.3.0",
     "@prisma/client": "^7.3.0",
     "@prisma/extension-accelerate": "^3.0.1",
+    "@tanstack/react-table": "^8.21.3",
     "daisyui": "^5.5.18",
     "dayjs": "^1.11.19",
     "dotenv": "^17.2.4",

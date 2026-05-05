@@ -11,6 +11,9 @@
     "lastSyncNever": "Never synced",
     "settings": "Settings"
   },
+  "menu": {
+    "allOrders": "All Orders"
+  },
   "settings": {
     "title": "Settings",
     "tabs": {
@@ -40,6 +43,9 @@
   },
   "orders": {
     "searchPlaceholder": "Search by order number or customer or...",
+    "noOrders": "No orders found",
+    "status": "Status",
+    "total": "Total",
     "noPending": "No pending orders",
     "noPicking": "No orders currently being picked",
     "noQA": "No orders in quality review",

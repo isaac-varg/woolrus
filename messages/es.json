@@ -11,6 +11,9 @@
     "lastSyncNever": "Nunca sincronizado",
     "settings": "Configuración"
   },
+  "menu": {
+    "allOrders": "Todos los órdenes"
+  },
   "settings": {
     "title": "Configuración",
     "tabs": {
@@ -40,6 +43,9 @@
   },
   "orders": {
     "searchPlaceholder": "Buscar por número de orden o cliente o...",
+    "noOrders": "No se encontraron órdenes",
+    "status": "Estado",
+    "total": "Total",
     "noPending": "No hay órdenes pendientes",
     "noPicking": "No hay órdenes en picking",
     "noQA": "No hay órdenes en revisión de calidad",

@@ -1,27 +1,40 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useApp, useAppActions } from "@/store/appSlice";
 import { TbLayoutSidebarLeftCollapse, TbLayoutSidebarLeftExpand, TbSettings } from "react-icons/tb";
 import { links } from "@/lib/sidebar/links";
 import SidebarButton from "./SidebarButton";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
 export default function Sidebar({
   initialCollapsed,
+  lastSyncAt,
 }: {
   initialCollapsed: boolean;
+  lastSyncAt: string | null;
 }) {
   const { isSidebarCollapsed } = useApp()
   const { toggleSidebar, setSidebarCollapsed } = useAppActions();
   const t = useTranslations();
+  const format = useFormatter();
   const router = useRouter();
 
   useEffect(() => {
     setSidebarCollapsed(initialCollapsed);
   }, [initialCollapsed, setSidebarCollapsed]);
+
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const id = setInterval(() => setNow(Date.now()), 30_000);
+    return () => clearInterval(id);
+  }, []);
+
+  const lastSyncLabel = lastSyncAt
+    ? t('sidebar.lastSync', { time: format.relativeTime(new Date(lastSyncAt), now) })
+    : t('sidebar.lastSyncNever');
 
   return (
     <aside
@@ -66,7 +79,7 @@ export default function Sidebar({
       <div className="flex flex-col gap-2 py-4">
         {!isSidebarCollapsed && (
           <span className="text-xs text-base-content/50">
-            {t('sidebar.lastSync')}
+            {lastSyncLabel}
           </span>
         )}
 

@@ -6,6 +6,7 @@ import LoginScreen from "@/components/app/LoginScreen";
 import Sidebar from "@/components/app/Sidebar";
 import { getUserByEmail } from "@/actions/user/getUserByEmail";
 import { getUserPreferences } from "@/lib/preferences/getUserPreferences";
+import { getLastSync } from "@/actions/sync/getLastSync";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 
@@ -37,6 +38,7 @@ export default async function RootLayout({
   const preferences = getUserPreferences(user);
   const locale = await getLocale();
   const messages = await getMessages();
+  const lastSyncAt = isAuthenticated ? await getLastSync().catch(() => null) : null;
 
   return (
     <html lang={locale} data-theme={preferences.theme} >
@@ -46,7 +48,10 @@ export default async function RootLayout({
         <NextIntlClientProvider messages={messages} locale={locale}>
           {isAuthenticated ? (
             <div className="flex h-screen">
-              <Sidebar initialCollapsed={preferences.sidebarCollapsed} />
+              <Sidebar
+                initialCollapsed={preferences.sidebarCollapsed}
+                lastSyncAt={lastSyncAt ? lastSyncAt.toISOString() : null}
+              />
               <main className="flex-1 overflow-auto">{children}</main>
             </div>
           ) : (

@@ -7,7 +7,8 @@
     "ready": "Ready",
     "voids": "Voids",
     "collapse": "Collapse Sidebar",
-    "lastSync": "Last Sync: 2 minutes ago",
+    "lastSync": "Last Sync: {time}",
+    "lastSyncNever": "Never synced",
     "settings": "Settings"
   },
   "settings": {

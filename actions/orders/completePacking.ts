@@ -1,5 +1,6 @@
 'use server'
 
+import { after } from "next/server"
 import prisma from "@/lib/prisma"
 import { auth } from "@/auth"
 import { WorkflowStatus } from "@/prisma/generated/enums"
@@ -33,9 +34,12 @@ export const completePacking = async (orderId: string) => {
     data: { workflowStatus: WorkflowStatus.QA },
   })
 
-  // Fire-and-forget: fetch shipping rates asynchronously
-  fetchRatesForOrder(orderId).catch((err) => {
-    console.error(`[ShipStation] Failed to fetch rates for order ${orderId}:`, err)
+  after(async () => {
+    try {
+      await fetchRatesForOrder(orderId)
+    } catch (err) {
+      console.error(`[ShipStation] Failed to fetch rates for order ${orderId}:`, err)
+    }
   })
 
   return getOrder(orderId)

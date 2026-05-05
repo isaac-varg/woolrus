@@ -5,6 +5,7 @@ import {
   shipstation,
   getShipFromAddress,
   orderAddressToShipTo,
+  type WooShippingAddress,
 } from '@/lib/shipstation'
 import type { RatePackage, RateRequest } from '@/lib/shipstation.types'
 
@@ -33,7 +34,8 @@ export const fetchRatesForOrder = async (orderId: string) => {
 
   const shipFrom = getShipFromAddress()
   const shipTo = orderAddressToShipTo(
-    order.shippingAddress as Record<string, string>,
+    (order.shippingAddress ?? {}) as WooShippingAddress,
+    (order.billingAddress ?? {}) as WooShippingAddress,
   )
 
   // Delete stale rates in a transaction before inserting new ones

@@ -35,6 +35,7 @@ export const GET_PROCESSING_ORDERS = gql`
           state
           postcode
           country
+          phone
         }
         lineItems {
           nodes {

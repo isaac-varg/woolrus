@@ -115,7 +115,7 @@ export function getShipFromAddress(): Address {
   }
 }
 
-type WooShippingAddress = {
+export type WooShippingAddress = {
   firstName?: string
   lastName?: string
   company?: string
@@ -128,17 +128,26 @@ type WooShippingAddress = {
   phone?: string
 }
 
-export function orderAddressToShipTo(shipping: WooShippingAddress): Address {
+export function orderAddressToShipTo(
+  shipping: WooShippingAddress,
+  billing?: WooShippingAddress,
+): Address {
+  const pick = (s?: string, b?: string) =>
+    (s && s.trim()) || (b && b.trim()) || ''
+  const name =
+    [shipping.firstName, shipping.lastName].filter(Boolean).join(' ').trim() ||
+    [billing?.firstName, billing?.lastName].filter(Boolean).join(' ').trim()
+  const phone = pick(shipping.phone, billing?.phone)
   return {
-    name: [shipping.firstName, shipping.lastName].filter(Boolean).join(' '),
-    phone: shipping.phone,
-    company_name: shipping.company,
-    address_line1: shipping.address1 ?? '',
-    address_line2: shipping.address2,
-    city_locality: shipping.city ?? '',
-    state_province: shipping.state ?? '',
-    postal_code: shipping.postcode ?? '',
-    country_code: shipping.country ?? 'US',
+    name,
+    phone: phone || undefined,
+    company_name: shipping.company || billing?.company,
+    address_line1: pick(shipping.address1, billing?.address1),
+    address_line2: shipping.address2 || billing?.address2,
+    city_locality: pick(shipping.city, billing?.city),
+    state_province: pick(shipping.state, billing?.state),
+    postal_code: pick(shipping.postcode, billing?.postcode),
+    country_code: pick(shipping.country, billing?.country) || 'US',
     address_residential_indicator: 'unknown',
   }
 }

@@ -1,7 +1,7 @@
 'use server'
 
 import prisma from '@/lib/prisma'
-import { woo } from '@/lib/woocommerce'
+import { getWooClient } from '@/lib/woocommerce'
 import { addWooOrderNote } from '@/lib/woocommerce-rest'
 import { UPDATE_ORDER_STATUS } from '@/queries/orders'
 import { WorkflowStatus } from '@/prisma/generated/enums'
@@ -106,7 +106,7 @@ export async function shipOrders(orderIds: string[]): Promise<ShipOrdersResult> 
       // 2. Push status + tracking to WooCommerce
       const trackingNumber = order.workflow?.trackingNumber ?? ''
       try {
-        await woo.request(UPDATE_ORDER_STATUS, {
+        await getWooClient().request(UPDATE_ORDER_STATUS, {
           input: {
             orderId: order.wooId,
             status: 'COMPLETED',

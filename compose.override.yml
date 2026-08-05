@@ -1,0 +1,23 @@
+# Picked up automatically by `docker compose up`.
+#
+# Default: infrastructure only (postgres, rustfs, wordpress, mariadb) with DB
+# ports published, so you can run `pnpm run dev` on the host against it.
+#
+# Run everything containerized instead with:
+#   docker compose --profile full up
+
+services:
+  woolrus:
+    profiles: ["full"]
+
+  woolrus-migrate:
+    # Host dev applies migrations with `pnpm run prisma:migrate` instead.
+    profiles: ["full"]
+
+  postgres:
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+
+  mariadb:
+    ports:
+      - "${MARIADB_PORT:-3306}:3306"

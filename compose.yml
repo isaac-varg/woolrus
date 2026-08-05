@@ -1,0 +1,237 @@
+name: woolrus
+
+services:
+  woolrus:
+    build:
+      context: .
+      target: runner
+    depends_on:
+      postgres:
+        condition: service_healthy
+      woolrus-migrate:
+        condition: service_completed_successfully
+      rustfs-init:
+        condition: service_completed_successfully
+    ports:
+      - "${WOOLRUS_PORT:-3000}:3000"
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-woolrus}:${POSTGRES_PASSWORD:-woolrus}@postgres:5432/${POSTGRES_DB:-woolrus}
+      WOO_GRAPHQL_URL: http://wordpress/graphql
+      WP_GRAPHQL_KEY: ${WP_GRAPHQL_KEY:-}
+      WP_GRAPHQL_SECRET: ${WP_GRAPHQL_SECRET:-}
+      S3_END_POINT: rustfs
+      S3_PORT: "9000"
+      S3_REGION: ${S3_REGION:-us-east-1}
+      S3_ACCESS_KEY: ${RUSTFS_ACCESS_KEY:-rustfsadmin}
+      S3_SECRET_KEY: ${RUSTFS_SECRET_KEY:-rustfsadmin}
+      S3_NOTES_BUCKET: ${S3_NOTES_BUCKET:-woolrus-notes}
+      AUTH_SECRET: "${AUTH_SECRET:?set AUTH_SECRET in .env - generate one with `openssl rand -base64 32`}"
+      AUTH_DISCORD_ID: ${AUTH_DISCORD_ID:-}
+      AUTH_DISCORD_SECRET: ${AUTH_DISCORD_SECRET:-}
+      AUTH_TRUST_HOST: "true"
+      SYNC_SECRET: ${SYNC_SECRET:-}
+      SHIPSTATION_SECRET_KEY: ${SHIPSTATION_SECRET_KEY:-}
+      SHIP_FROM_NAME: ${SHIP_FROM_NAME:-Woolrus}
+      SHIP_FROM_PHONE: ${SHIP_FROM_PHONE:-}
+      SHIP_FROM_ADDRESS_LINE1: ${SHIP_FROM_ADDRESS_LINE1:-}
+      SHIP_FROM_CITY: ${SHIP_FROM_CITY:-}
+      SHIP_FROM_STATE: ${SHIP_FROM_STATE:-}
+      SHIP_FROM_POSTAL_CODE: ${SHIP_FROM_POSTAL_CODE:-}
+      SHIP_FROM_COUNTRY_CODE: ${SHIP_FROM_COUNTRY_CODE:-US}
+    restart: unless-stopped
+
+  woolrus-migrate:
+    build:
+      context: .
+      target: migrator
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-woolrus}:${POSTGRES_PASSWORD:-woolrus}@postgres:5432/${POSTGRES_DB:-woolrus}
+    restart: "no"
+
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-woolrus}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-woolrus}
+      POSTGRES_DB: ${POSTGRES_DB:-woolrus}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-woolrus} -d ${POSTGRES_DB:-woolrus}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  rustfs:
+    image: rustfs/rustfs:latest
+    depends_on:
+      rustfs-permissions:
+        condition: service_completed_successfully
+    security_opt:
+      - "no-new-privileges:true"
+    ports:
+      - "${RUSTFS_API_PORT:-9000}:9000"
+      - "${RUSTFS_CONSOLE_PORT:-9001}:9001"
+    environment:
+      RUSTFS_VOLUMES: /data
+      RUSTFS_ADDRESS: 0.0.0.0:9000
+      RUSTFS_CONSOLE_ADDRESS: 0.0.0.0:9001
+      RUSTFS_CONSOLE_ENABLE: "true"
+      RUSTFS_CONSOLE_CORS_ALLOWED_ORIGINS: "*"
+      RUSTFS_ACCESS_KEY: ${RUSTFS_ACCESS_KEY:-rustfsadmin}
+      RUSTFS_SECRET_KEY: ${RUSTFS_SECRET_KEY:-rustfsadmin}
+      RUSTFS_OBS_LOGGER_LEVEL: info
+      RUSTFS_UNSAFE_BYPASS_DISK_CHECK: "true"
+    volumes:
+      - rustfs_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:9000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+    restart: unless-stopped
+
+  rustfs-permissions:
+    image: alpine
+    volumes:
+      - rustfs_data:/data
+    command: sh -c "chown -R 10001:10001 /data"
+    restart: "no"
+
+  rustfs-init:
+    image: amazon/aws-cli:latest
+    depends_on:
+      rustfs:
+        condition: service_healthy
+    environment:
+      AWS_ACCESS_KEY_ID: ${RUSTFS_ACCESS_KEY:-rustfsadmin}
+      AWS_SECRET_ACCESS_KEY: ${RUSTFS_SECRET_KEY:-rustfsadmin}
+      AWS_DEFAULT_REGION: ${S3_REGION:-us-east-1}
+      BUCKET: ${S3_NOTES_BUCKET:-woolrus-notes}
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        set -e
+        if aws --endpoint-url http://rustfs:9000 s3api head-bucket --bucket "$$BUCKET" 2>/dev/null; then
+          echo "bucket $$BUCKET already exists"
+        else
+          aws --endpoint-url http://rustfs:9000 s3 mb "s3://$$BUCKET"
+          echo "created bucket $$BUCKET"
+        fi
+    restart: "no"
+
+  wordpress:
+    image: wordpress:php8.3-apache
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    ports:
+      - "${WP_PORT:-8080}:80"
+    environment:
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wordpress}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME:-wordpress}
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_ENVIRONMENT_TYPE', 'local');
+        define('FS_METHOD', 'direct');
+    volumes:
+      - wordpress_data:/var/www/html
+    restart: unless-stopped
+
+  mariadb:
+    image: mariadb:11
+    environment:
+      MARIADB_DATABASE: ${WORDPRESS_DB_NAME:-wordpress}
+      MARIADB_USER: ${WORDPRESS_DB_USER:-wordpress}
+      MARIADB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wordpress}
+      MARIADB_ROOT_PASSWORD: ${WORDPRESS_DB_ROOT_PASSWORD:-wordpress}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  wp-init:
+    image: wordpress:cli
+    depends_on:
+      mariadb:
+        condition: service_healthy
+      wordpress:
+        condition: service_started
+    environment:
+      WORDPRESS_DB_HOST: mariadb:3306
+      WORDPRESS_DB_USER: ${WORDPRESS_DB_USER:-wordpress}
+      WORDPRESS_DB_PASSWORD: ${WORDPRESS_DB_PASSWORD:-wordpress}
+      WORDPRESS_DB_NAME: ${WORDPRESS_DB_NAME:-wordpress}
+      WP_URL: ${WP_URL:-http://localhost:8080}
+      WP_TITLE: ${WP_TITLE:-Woolrus Dev Store}
+      WP_ADMIN_USER: ${WP_ADMIN_USER:-admin}
+      WP_ADMIN_PASSWORD: ${WP_ADMIN_PASSWORD:-admin}
+      WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL:-admin@example.com}
+      WOOGRAPHQL_VERSION: ${WOOGRAPHQL_VERSION:-v1.0.3}
+    volumes:
+      - wordpress_data:/var/www/html
+      # drop paid/private plugin zips here (WooGraphQL Pro). Gitignored.
+      - ./wp-plugins:/dropin:ro
+    entrypoint: /bin/sh
+    command:
+      - -c
+      - |
+        set -e
+
+        echo "waiting for WordPress files..."
+        until [ -f /var/www/html/wp-settings.php ]; do sleep 2; done
+
+        if wp core is-installed 2>/dev/null; then
+          echo "WordPress already installed, skipping core install"
+        else
+          wp core install \
+            --url="$$WP_URL" \
+            --title="$$WP_TITLE" \
+            --admin_user="$$WP_ADMIN_USER" \
+            --admin_password="$$WP_ADMIN_PASSWORD" \
+            --admin_email="$$WP_ADMIN_EMAIL" \
+            --skip-email
+        fi
+
+        wp plugin install woocommerce wp-graphql --activate
+        wp plugin install \
+          "https://github.com/wp-graphql/wp-graphql-woocommerce/releases/download/$$WOOGRAPHQL_VERSION/wp-graphql-woocommerce.zip" \
+          --activate --force
+
+        # WooGraphQL Pro and anything else dropped into ./wp-plugins
+        for zip in /dropin/*.zip; do
+          [ -e "$$zip" ] || continue
+          echo "installing drop-in plugin $$zip"
+          wp plugin install "$$zip" --activate --force
+        done
+
+        wp option update woocommerce_task_list_hidden yes
+        wp rewrite structure '/%postname%/' --hard
+
+        echo ""
+        echo "=============================================================="
+        echo " WordPress ready at $$WP_URL  (admin: $$WP_ADMIN_USER / $$WP_ADMIN_PASSWORD)"
+        echo ""
+        echo " Put these in your .env:"
+        echo "   WP_GRAPHQL_KEY=$$WP_ADMIN_USER"
+        echo -n "   WP_GRAPHQL_SECRET="
+        wp user application-password create "$$WP_ADMIN_USER" woolrus --porcelain
+        echo "=============================================================="
+    restart: "no"
+
+volumes:
+  postgres_data:
+  rustfs_data:
+  wordpress_data:
+  mariadb_data:

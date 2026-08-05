@@ -1,4 +1,4 @@
-import { pullProcessingOrders } from "@/actions/pullOrders";
+import { pullProcessingOrders } from "@/actions/sync/pullOrders";
 
 export async function POST(request: Request) {
   // Simple auth check — use a secret token

@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { woo } from "@/lib/woocommerce";
+import { getWooClient } from "@/lib/woocommerce";
 import { GET_PROCESSING_ORDERS } from "@/queries/orders";
 import { upsertProduct } from "./upsertProduct";
 
@@ -10,7 +10,7 @@ export async function pullProcessingOrders() {
 
   try {
     do {
-      const data: any = await woo.request(GET_PROCESSING_ORDERS, {
+      const data: any = await getWooClient().request(GET_PROCESSING_ORDERS, {
         after: cursor,
       });
 

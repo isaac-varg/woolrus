@@ -42,3 +42,7 @@ yarn-error.log*
 next-env.d.ts
 
 /prisma/generated/
+
+# drop-in WordPress plugins (WooGraphQL Pro etc.)
+/wp-plugins/*
+!/wp-plugins/README.md
